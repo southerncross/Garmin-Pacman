@@ -10,19 +10,17 @@ class PacmanView extends Ui.WatchFace {
 	var ghostCyan;
 	var ghostBrown;
 	var ghostPink;
-	
+
 	var playground;
-	
+
     //! Load your resources here
     function onLayout(dc) {
-        //setLayout(Rez.Layouts.WatchFace(dc));
-        
         playground = new Playground();
         playground.init(dc);
-        
+
         pacman = new Pacman();
         pacman.init(
-        	playground, 
+        	playground,
         	{:x => 7, :y => 6},
         	:right,
         	{
@@ -30,9 +28,9 @@ class PacmanView extends Ui.WatchFace {
         		:right => Ui.loadResource(Rez.Drawables.pacman_r),
         		:down => Ui.loadResource(Rez.Drawables.pacman_d),
         		:left => Ui.loadResource(Rez.Drawables.pacman_l)
-			}
-        );
-        
+            }
+         );
+
         ghostRed = new Ghost();
         ghostRed.init(
         	playground,
@@ -45,7 +43,7 @@ class PacmanView extends Ui.WatchFace {
         		:left => Ui.loadResource(Rez.Drawables.ghost_red_l)
         	}
         );
-        
+
         ghostCyan = new Ghost();
         ghostCyan.init(
         	playground,
@@ -58,12 +56,12 @@ class PacmanView extends Ui.WatchFace {
         		:left => Ui.loadResource(Rez.Drawables.ghost_cyan_l)
         	}
         );
-        
+
         ghostBrown = new Ghost();
         ghostBrown.init(
         	playground,
         	{:x => 3, :y => 10},
-        	:right, 
+        	:right,
         	{
         		:up => Ui.loadResource(Rez.Drawables.ghost_brown_u),
         		:right => Ui.loadResource(Rez.Drawables.ghost_brown_r),
@@ -71,12 +69,12 @@ class PacmanView extends Ui.WatchFace {
         		:left => Ui.loadResource(Rez.Drawables.ghost_brown_l)
         	}
         );
-        
+
         ghostPink = new Ghost();
         ghostPink.init(
         	playground,
-        	{:x => 4, :y => 10}, 
-        	:right, 
+        	{:x => 4, :y => 10},
+        	:right,
         	{
         		:up => Ui.loadResource(Rez.Drawables.ghost_pink_u),
         		:right => Ui.loadResource(Rez.Drawables.ghost_pink_r),
@@ -96,21 +94,26 @@ class PacmanView extends Ui.WatchFace {
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
-        
+
         playground.update(dc);
-        
-       	pacman.moveToNextPos(dc);
-       	
-       	ghostRed.moveToNextPos(dc);
-       	ghostCyan.moveToNextPos(dc);
-       	ghostBrown.moveToNextPos(dc);
-       	ghostPink.moveToNextPos(dc);
+
+        pacman.moveToNextPos(dc);
+
+        ghostRed.moveToNextPos(dc);
+        ghostCyan.moveToNextPos(dc);
+        ghostBrown.moveToNextPos(dc);
+        ghostPink.moveToNextPos(dc);
     }
 
     //! Called when this View is removed from the screen. Save the
     //! state of this View here. This includes freeing resources from
     //! memory.
     function onHide() {
+        ghostPink.uninit();
+        ghostBrown.uninit();
+        ghostCyan.uninit();
+        ghostRed.uninit();
+        pacman.uninit();
     	playground.unit();
     }
 

@@ -1,35 +1,45 @@
 using Toybox.Graphics as Gfx;
 using Toybox.System as Sys;
 
+// Playground of pacman game
 class Playground {
-	const UNIT = 15;
-	const SIZE = 15;
-	
+	// Playground map, 2d array actually.
 	var plg;
-	
+
+	// Initialize function.
+	// The built-in initialize function is limited, so we decide to
+	// initialize the object explicitly.
+	//
+	// @return
 	function init() {
 		// initialize playground
-		plg = new [SIZE];
-		for (var i = 0; i < SIZE; i++) {
-			plg[i] = new [SIZE];
-			for (var j = 0; j < SIZE; j++) {
+		plg = new [SCREEN_UNIT];
+		for (var i = 0; i < SCREEN_UNIT; i++) {
+			plg[i] = new [SCREEN_UNIT];
+			for (var j = 0; j < SCREEN_UNIT; j++) {
 				plg[i][j] = :nil;
 			}
 		}
 	}
-	
-	// in case of recursive reference problem, 
- 	// we need to uninitialize playground explicitly.
+
+	// Uninitialize function.
+	// Monkey-C uses reference-counting mechanism for garbage collection,
+	// so it has the problem of recursive reference. To avoid memory leak,
+	// we should also call this uninitialize function explicitly to release
+	// references.
+	//
+	// @return
 	function uninit() {
 		itms = null;
 		plg = null;
 	}
-	
-	function draw(dc) {
-		dc.setColor(Gfx.COLOR_GREEN, Gfx.COLOR_BLACK);
-		dc.drawRectangle(50, 50, 20, 20);
-	}
-	
-	function update(dc) {
-	}
-}
+
+ 	// Update playground.
+ 	// There exist something that need to be updated as time goes by.
+ 	// For example, time should be checked and updated.
+ 	//
+ 	// @param dc[in] device context which is used for drawing
+ 	// @return
+ 	function update(dc) {
+ 	}
+ }
