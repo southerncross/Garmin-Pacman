@@ -1,6 +1,7 @@
 using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 using Toybox.System as Sys;
+using Toybox.Math as Math;
 
 // Calculate moving direction.
 //
@@ -8,8 +9,59 @@ using Toybox.System as Sys;
 // @param newPos[in] new position
 // @return moving direction symbol
 function getDirection(pos, newPos) {
-    // TODO
-    return :right;
+	var dir = null;
+
+    if (newPos[:y] < pos[:y]) {
+    	if (newPos[:y] == 0) {
+    		dir = :down;
+    	} else {
+    		dir = :up;
+    	}
+    } else if (newPos[:y] > pos[:y]) {
+    	if (newPos[:y] == SCREEN_UNIT) {
+    		dir = :up;
+    	} else {
+    		dir = :down;
+    	}
+    } else if (newPos[:x] < pos[:x]) {
+    	if (newPos[:x] == 0) {
+    		dir = :right;
+    	} else {
+    		dir = :left;
+    	}
+    } else if (newPos[:x] > pos[:x]) {
+    	if (newPos[:x] == SCREEN_UNIT) {
+    		dir = :left;
+    	} else {
+    		dir = :right;
+    	}
+    } else {
+    	dir = null;
+    }
+
+    return dir;
+}
+
+function getNextPosition(pos, dir) {
+	var nextPos = {};
+	if (dir == :up) {
+		nextPos[:x] = pos[:x];
+		nextPos[:y] = (pos[:y] - 1 + SCREEN_UNIT) % SCREEN_UNIT;
+	} else if (dir == :down) {
+		nextPos[:x] = pos[:x];
+		nextPos[:y] = (pos[:y] + 1 + SCREEN_UNIT) % SCREEN_UNIT;
+	} else if (dir == :left) {
+		nextPos[:x] = (pos[:x] - 1 + SCREEN_UNIT) % SCREEN_UNIT;
+		nextPos[:y] = pos[:y]; 
+	} else if (dir == :right) {
+		nextPos[:x] = (pos[:x] + 1 + SCREEN_UNIT) % SCREEN_UNIT;
+		nextPos[:y] = pos[:y]; 
+	} else {
+		nextPos[:x] = pos[:x];
+		nextPos[:y] = pos[:y];
+	}
+
+	return nextPos;
 }
 
 // Movable indicates anything on the playground that is movable:)
@@ -79,6 +131,8 @@ class Pacman extends Movable {
     function init(plg, pos, dir, bm) {
         Movable.init(plg, pos, dir);
         self.bm = bm;
+
+        plg.set(pos, :pacman);
     }
 
     // Uninitialize function.
@@ -95,18 +149,18 @@ class Pacman extends Movable {
     // @param dc[in] device context which is used for drawing
     // @return
     function moveToNextPos(dc) {
-        var nextPos = findNextPos();
+        var nextPos = _findNextPos();
         dir = getDirection(pos, nextPos);
-        erase(dc);
+        _erase(dc);
         pos = nextPos;
-        draw(dc);
+        _draw(dc);
     }
 
     // Erase images of current position.
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    hidden function erase(dc) {
+    hidden function _erase(dc) {
         dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
         dc.drawRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     }
@@ -115,19 +169,49 @@ class Pacman extends Movable {
     //
     // @pram dc[in] device context which is used for drawing
     // @return
-    hidden function draw(dc) {
+    hidden function _draw(dc) {
         dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, bm[dir]);
     }
 
     // Find next position according to current playground situation.
     //
     // @return next position
-    hidden function findNextPos() {
-		// TODO: not finished yet.
-        return {
-            :x => (pos[:x] + 1) % 15,
-            :y => (pos[:y] + 1) % 15
-        };
+    hidden function _findNextPos() {
+    	// Move along previous direction.
+		if (_isDirectionValid(dir)) {
+			return getNextPosition(pos, dir);
+		}
+
+        var dirs = new [3];
+        var cnt = 0;
+
+        if (:up != dir && _isDirectionValid(:up)) {
+        	dirs[cnt] = :up;
+        	cnt++;
+        }
+        if (:right != dir && _isDirectionValid(:right)) {
+        	dirs[cnt] = :right;
+        	cnt++;
+        }
+        if (:down != dir && _isDirectionValid(:down)) {
+        	dirs[cnt] = :right;
+        	cnt++;
+        }
+        if (:left != dir && _isDirectionValid(:left)) {
+        	dirs[cnt] = :left;
+        	cnt++;
+        }
+
+        if (cnt > 0) {
+        	return getNextPosition(pos, dirs[Math.rand() % cnt]); // TODO: srand
+        } else {
+        	return getNextPosition(pos, null);
+        }
+    }
+
+    hidden function _isDirectionValid(dir) {
+    	var nextPos = getNextPosition(pos, dir);
+    	return plg.get(nextPos) == :nil;
     }
 }
 
@@ -169,18 +253,18 @@ class Ghost extends Movable {
     // @param dc[in] device context which is used for drawing
     // @return
     function moveToNextPos(dc) {
-        var nextPos = findNextPos();
+        var nextPos = _findNextPos();
         dir = getDirection(pos, nextPos);
-        erase(dc);
+        _erase(dc);
         pos = nextPos;
-        draw(dc);
+        _draw(dc);
     }
 
     // Erase images of current position.
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    hidden function erase(dc) {
+    hidden function _erase(dc) {
         dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
         dc.drawRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     }
@@ -189,14 +273,14 @@ class Ghost extends Movable {
     //
     // @pram dc[in] device context which is used for drawing
     // @return
-    hidden function draw(dc) {
+    hidden function _draw(dc) {
         dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, bm[dir]);
     }
 
     // Find next position according to current playground situation.
     //
     // @return next position
-    hidden function findNextPos() {
+    hidden function _findNextPos() {
         return {
             :x => (pos[:x] + 1) % 15,
             :y => (pos[:y] + 1) % 15

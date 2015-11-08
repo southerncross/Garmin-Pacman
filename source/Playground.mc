@@ -42,4 +42,12 @@ class Playground {
  	// @return
  	function update(dc) {
  	}
+
+ 	function get(pos) {
+ 		return plg[pos[:x]][pos[:y]];
+ 	}
+
+ 	function set(pos, ele) {
+ 		plg[pos[:x]][pos[:y]] = ele;
+ 	}
  }
