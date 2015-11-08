@@ -36,7 +36,7 @@ function getDirection(pos, newPos) {
     		dir = :right;
     	}
     } else {
-    	dir = null;
+    	dir = [:up, :right, :down, :left][Math.rand() % 4];
     }
 
     return dir;
@@ -161,6 +161,7 @@ class Pacman extends Movable {
     // @param dc[in] device context which is used for drawing
     // @return
     hidden function _erase(dc) {
+    	plg.set(pos, :nil);
         dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
         dc.drawRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     }
@@ -170,6 +171,7 @@ class Pacman extends Movable {
     // @pram dc[in] device context which is used for drawing
     // @return
     hidden function _draw(dc) {
+    	plg.set(pos, :pacman);
         dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, bm[dir]);
     }
 
@@ -237,6 +239,8 @@ class Ghost extends Movable {
     function init(plg, pos, dir, bm) {
         Movable.init(plg, pos, dir);
         self.bm = bm;
+
+        plg.set(pos, :ghost);
     }
 
     // Uninitialize function.
@@ -265,6 +269,7 @@ class Ghost extends Movable {
     // @param dc[in] device context which is used for drawing
     // @return
     hidden function _erase(dc) {
+    	plg.set(pos, :nil);
         dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
         dc.drawRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     }
@@ -274,6 +279,7 @@ class Ghost extends Movable {
     // @pram dc[in] device context which is used for drawing
     // @return
     hidden function _draw(dc) {
+    	plg.set(pos, :ghost);
         dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, bm[dir]);
     }
 
@@ -281,9 +287,40 @@ class Ghost extends Movable {
     //
     // @return next position
     hidden function _findNextPos() {
-        return {
-            :x => (pos[:x] + 1) % 15,
-            :y => (pos[:y] + 1) % 15
-        };
+        // Move along previous direction.
+		if (_isDirectionValid(dir)) {
+			return getNextPosition(pos, dir);
+		}
+
+        var dirs = new [3];
+        var cnt = 0;
+
+        if (:up != dir && _isDirectionValid(:up)) {
+        	dirs[cnt] = :up;
+        	cnt++;
+        }
+        if (:right != dir && _isDirectionValid(:right)) {
+        	dirs[cnt] = :right;
+        	cnt++;
+        }
+        if (:down != dir && _isDirectionValid(:down)) {
+        	dirs[cnt] = :right;
+        	cnt++;
+        }
+        if (:left != dir && _isDirectionValid(:left)) {
+        	dirs[cnt] = :left;
+        	cnt++;
+        }
+
+        if (cnt > 0) {
+        	return getNextPosition(pos, dirs[Math.rand() % cnt]); // TODO: srand
+        } else {
+        	return getNextPosition(pos, null);
+        }
+    }
+
+    hidden function _isDirectionValid() {
+    	var nextPos = getNextPosition(pos, dir);
+    	return plg.get(nextPos) == :nil;
     }
 }
