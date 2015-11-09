@@ -87,16 +87,16 @@ class Playground {
         var minute = clockTime.min;
 
 		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-		
+
 		dc.fillRectangle(4 * UNIT_SIZE, 3 * UNIT_SIZE, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
 		dc.drawBitmap(4 * UNIT_SIZE, 3 * UNIT_SIZE, hBm[hour / 10]);
-		
+
 		dc.fillRectangle(8 * UNIT_SIZE, 3 * UNIT_SIZE, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
 		dc.drawBitmap(8 * UNIT_SIZE, 3 * UNIT_SIZE, hBm[hour % 10]);
-		
+
 		dc.fillRectangle(6 * UNIT_SIZE, 8 * UNIT_SIZE, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
 		dc.drawBitmap(6 * UNIT_SIZE, 8 * UNIT_SIZE, mBm[minute / 10]);
-		
+
 		dc.fillRectangle(9 * UNIT_SIZE, 8 * UNIT_SIZE, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
 		dc.drawBitmap(9 * UNIT_SIZE, 8 * UNIT_SIZE, mBm[minute % 10]);
  	}
