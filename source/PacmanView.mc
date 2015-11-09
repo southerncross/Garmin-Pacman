@@ -5,7 +5,6 @@ using Toybox.Lang as Lang;
 
 class PacmanView extends Ui.WatchFace {
 
-	var emptyUnit;
 	var movables;
 
 	var playground;
@@ -14,8 +13,6 @@ class PacmanView extends Ui.WatchFace {
     function onLayout(dc) {
         playground = new Playground();
         playground.init();
-
-       	emptyUnit = Ui.loadResource(Rez.Drawables.empty_unit);
 
 		movables = new [5];
 
@@ -102,7 +99,7 @@ class PacmanView extends Ui.WatchFace {
         playground.update(dc);
 
         for (var i = 0; i < 5; i++) {
-        	movables[i].moveToNextPos(dc, emptyUnit);
+        	movables[i].moveToNextPos(dc);
         }
     }
 
@@ -110,12 +107,9 @@ class PacmanView extends Ui.WatchFace {
     //! state of this View here. This includes freeing resources from
     //! memory.
     function onHide() {
-        ghostPink.uninit();
-        ghostBrown.uninit();
-        ghostCyan.uninit();
-        ghostRed.uninit();
-        pacman.uninit();
-    	playground.unit();
+    	for (var i = 0; i < 5; i++) {
+        	movables[i].uninit();
+        }
     }
 
     //! The user has just looked at their watch. Timers and animations may be started here.

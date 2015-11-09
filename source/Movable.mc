@@ -52,10 +52,10 @@ function getNextPosition(pos, dir) {
 		nextPos[:y] = (pos[:y] + 1 + SCREEN_UNIT) % SCREEN_UNIT;
 	} else if (dir == :left) {
 		nextPos[:x] = (pos[:x] - 1 + SCREEN_UNIT) % SCREEN_UNIT;
-		nextPos[:y] = pos[:y]; 
+		nextPos[:y] = pos[:y];
 	} else if (dir == :right) {
 		nextPos[:x] = (pos[:x] + 1 + SCREEN_UNIT) % SCREEN_UNIT;
-		nextPos[:y] = pos[:y]; 
+		nextPos[:y] = pos[:y];
 	} else {
 		nextPos[:x] = pos[:x];
 		nextPos[:y] = pos[:y];
@@ -148,10 +148,10 @@ class Pacman extends Movable {
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    function moveToNextPos(dc, emptyUnit) {
+    function moveToNextPos(dc) {
         var nextPos = _findNextPos();
         dir = getDirection(pos, nextPos);
-        _erase(dc, emptyUnit);
+        _erase(dc);
         pos = nextPos;
         _draw(dc);
     }
@@ -160,9 +160,10 @@ class Pacman extends Movable {
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    hidden function _erase(dc, emptyUnit) {
+    hidden function _erase(dc) {
     	plg.set(pos, :nil);
-    	dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, emptyUnit);
+    	dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    	dc.fillRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     }
 
     // Draw images of current position.
@@ -255,10 +256,10 @@ class Ghost extends Movable {
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    function moveToNextPos(dc, emptyUnit) {
+    function moveToNextPos(dc) {
         var nextPos = _findNextPos();
         dir = getDirection(pos, nextPos);
-        _erase(dc, emptyUnit);
+        _erase(dc);
         pos = nextPos;
         _draw(dc);
     }
@@ -267,9 +268,10 @@ class Ghost extends Movable {
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    hidden function _erase(dc, emptyUnit) {
+    hidden function _erase(dc) {
     	plg.set(pos, :nil);
-    	dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, emptyUnit);
+    	dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    	dc.fillRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     }
 
     // Draw images of current position.
