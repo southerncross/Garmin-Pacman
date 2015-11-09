@@ -5,20 +5,21 @@ using Toybox.Lang as Lang;
 
 class PacmanView extends Ui.WatchFace {
 
-	var pacman;
-	var ghostRed;
-	var ghostCyan;
-	var ghostBrown;
-	var ghostPink;
+	var emptyUnit;
+	var movables;
 
 	var playground;
 
     //! Load your resources here
     function onLayout(dc) {
         playground = new Playground();
-        playground.init(dc);
+        playground.init();
 
-        pacman = new Pacman();
+       	emptyUnit = Ui.loadResource(Rez.Drawables.empty_unit);
+
+		movables = new [5];
+
+        var pacman = new Pacman();
         pacman.init(
         	playground,
         	{:x => 7, :y => 6},
@@ -30,8 +31,9 @@ class PacmanView extends Ui.WatchFace {
         		:left => Ui.loadResource(Rez.Drawables.pacman_l)
             }
          );
+         movables[0] = pacman;
 
-        ghostRed = new Ghost();
+        var ghostRed = new Ghost();
         ghostRed.init(
         	playground,
         	{:x => 3, :y => 9},
@@ -43,8 +45,9 @@ class PacmanView extends Ui.WatchFace {
         		:left => Ui.loadResource(Rez.Drawables.ghost_red_l)
         	}
         );
+        movables[1] = ghostRed;
 
-        ghostCyan = new Ghost();
+        var ghostCyan = new Ghost();
         ghostCyan.init(
         	playground,
         	{:x => 4, :y => 9},
@@ -56,8 +59,9 @@ class PacmanView extends Ui.WatchFace {
         		:left => Ui.loadResource(Rez.Drawables.ghost_cyan_l)
         	}
         );
+        movables[2] = ghostCyan;
 
-        ghostBrown = new Ghost();
+        var ghostBrown = new Ghost();
         ghostBrown.init(
         	playground,
         	{:x => 3, :y => 10},
@@ -69,8 +73,9 @@ class PacmanView extends Ui.WatchFace {
         		:left => Ui.loadResource(Rez.Drawables.ghost_brown_l)
         	}
         );
+        movables[3] = ghostBrown;
 
-        ghostPink = new Ghost();
+        var ghostPink = new Ghost();
         ghostPink.init(
         	playground,
         	{:x => 4, :y => 10},
@@ -82,6 +87,7 @@ class PacmanView extends Ui.WatchFace {
         		:left => Ui.loadResource(Rez.Drawables.ghost_pink_l)
         	}
         );
+        movables[4] = ghostPink;
     }
 
     //! Called when this View is brought to the foreground. Restore
@@ -92,17 +98,12 @@ class PacmanView extends Ui.WatchFace {
 
     //! Update the view
     function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout
-        View.onUpdate(dc);
 
         playground.update(dc);
 
-        pacman.moveToNextPos(dc);
-
-        ghostRed.moveToNextPos(dc);
-        ghostCyan.moveToNextPos(dc);
-        ghostBrown.moveToNextPos(dc);
-        ghostPink.moveToNextPos(dc);
+        for (var i = 0; i < 5; i++) {
+        	movables[i].moveToNextPos(dc, emptyUnit);
+        }
     }
 
     //! Called when this View is removed from the screen. Save the

@@ -27,5 +27,7 @@
     <bitmap id="ghost_red_d" filename="images/ghost_red_d.png" />
     <bitmap id="ghost_red_l" filename="images/ghost_red_l.png" />
     <bitmap id="ghost_red_r" filename="images/ghost_red_r.png" />
+    
+    <bitmap id="empty_unit" filename="images/empty_unit.png"></bitmap>
 
 </resources>

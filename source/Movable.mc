@@ -148,10 +148,10 @@ class Pacman extends Movable {
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    function moveToNextPos(dc) {
+    function moveToNextPos(dc, emptyUnit) {
         var nextPos = _findNextPos();
         dir = getDirection(pos, nextPos);
-        _erase(dc);
+        _erase(dc, emptyUnit);
         pos = nextPos;
         _draw(dc);
     }
@@ -160,10 +160,9 @@ class Pacman extends Movable {
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    hidden function _erase(dc) {
+    hidden function _erase(dc, emptyUnit) {
     	plg.set(pos, :nil);
-        dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-        dc.drawRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+    	dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, emptyUnit);
     }
 
     // Draw images of current position.
@@ -256,10 +255,10 @@ class Ghost extends Movable {
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    function moveToNextPos(dc) {
+    function moveToNextPos(dc, emptyUnit) {
         var nextPos = _findNextPos();
         dir = getDirection(pos, nextPos);
-        _erase(dc);
+        _erase(dc, emptyUnit);
         pos = nextPos;
         _draw(dc);
     }
@@ -268,10 +267,9 @@ class Ghost extends Movable {
     //
     // @param dc[in] device context which is used for drawing
     // @return
-    hidden function _erase(dc) {
+    hidden function _erase(dc, emptyUnit) {
     	plg.set(pos, :nil);
-        dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-        dc.drawRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+    	dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, emptyUnit);
     }
 
     // Draw images of current position.
