@@ -64,6 +64,10 @@ function getNextPosition(pos, dir) {
 	return nextPos;
 }
 
+function scale(c) {
+	return c * UNIT_SIZE;
+}
+
 // Movable indicates anything on the playground that is movable:)
 // Every movable object knows the playground map and its position.
 class Movable {
@@ -112,14 +116,6 @@ class Movable {
 
 // Pacman
 class Pacman extends Movable {
-    // Bitmap resources which is used for draw pacman.
-    // It has four pictures for each directions in total.
-    //
-    // TODO: ConnectIQ will does some differential computation of bitmap color
-    // which leads to impure color. We should use vector drawing instead of
-    // bitmap.
-    var bm;
-
     // Initialize function.
     // @see Movable
     //
@@ -128,10 +124,8 @@ class Pacman extends Movable {
     // @param dir[in] The initial direction
     // @poram bm[in] The bitmap resources.
     // @return
-    function init(plg, pos, dir, bm) {
+    function init(plg, pos, dir) {
         Movable.init(plg, pos, dir);
-        self.bm = bm;
-
         plg.set(pos, :pacman);
     }
 
@@ -140,7 +134,6 @@ class Pacman extends Movable {
     //
     // @return
     function uninit() {
-        bm = null;
         Movable.uninit();
     }
 
@@ -172,7 +165,67 @@ class Pacman extends Movable {
     // @return
     hidden function _draw(dc) {
     	plg.set(pos, :pacman);
-        dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, bm[dir]);
+
+    	dc.setColor(Gfx.COLOR_YELLOW, Gfx.COLOR_BLACK);
+    	if (dir == :up) {
+    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 4, scale(pos[:x]) + 1, scale(pos[:y]) + 9);
+    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 2, scale(pos[:x]) + 2, scale(pos[:y]) + 11);
+    		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 1, scale(pos[:x]) + 3, scale(pos[:y]) + 12);
+    		dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 1, scale(pos[:x]) + 4, scale(pos[:y]) + 12);
+    		dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 3, scale(pos[:x]) + 5, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]) + 6, scale(pos[:x]) + 6, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 7, scale(pos[:y]) + 8, scale(pos[:x]) + 7, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 8, scale(pos[:y]) + 6, scale(pos[:x]) + 8, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 9, scale(pos[:y]) + 3, scale(pos[:x]) + 9, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 10, scale(pos[:y]) + 1, scale(pos[:x]) + 10, scale(pos[:y]) + 12);
+    		dc.drawLine(scale(pos[:x]) + 11, scale(pos[:y]) + 1, scale(pos[:x]) + 11, scale(pos[:y]) + 12);
+    		dc.drawLine(scale(pos[:x]) + 12, scale(pos[:y]) + 2, scale(pos[:x]) + 12, scale(pos[:y]) + 11);
+    		dc.drawLine(scale(pos[:x]) + 13, scale(pos[:y]) + 4, scale(pos[:x]) + 13, scale(pos[:y]) + 9);
+    	} else if (dir == :down) {
+    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 5, scale(pos[:x]) + 1, scale(pos[:y]) + 10);
+    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 3, scale(pos[:x]) + 2, scale(pos[:y]) + 12);
+    		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 2, scale(pos[:x]) + 3, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 2, scale(pos[:x]) + 4, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 1, scale(pos[:x]) + 5, scale(pos[:y]) + 11);
+    		dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]) + 1, scale(pos[:x]) + 6, scale(pos[:y]) + 8);
+    		dc.drawLine(scale(pos[:x]) + 7, scale(pos[:y]) + 1, scale(pos[:x]) + 7, scale(pos[:y]) + 5);
+    		dc.drawLine(scale(pos[:x]) + 8, scale(pos[:y]) + 1, scale(pos[:x]) + 8, scale(pos[:y]) + 8);
+    		dc.drawLine(scale(pos[:x]) + 9, scale(pos[:y]) + 1, scale(pos[:x]) + 9, scale(pos[:y]) + 11);
+    		dc.drawLine(scale(pos[:x]) + 10, scale(pos[:y]) + 2, scale(pos[:x]) + 10, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 11, scale(pos[:y]) + 2, scale(pos[:x]) + 11, scale(pos[:y]) + 13);
+    		dc.drawLine(scale(pos[:x]) + 12, scale(pos[:y]) + 3, scale(pos[:x]) + 12, scale(pos[:y]) + 12);
+    		dc.drawLine(scale(pos[:x]) + 13, scale(pos[:y]) + 5, scale(pos[:x]) + 13, scale(pos[:y]) + 10);
+    	} else if (dir == :left) {
+    		dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 1, scale(pos[:x]) + 9, scale(pos[:y]) + 1);
+    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 2, scale(pos[:x]) + 11, scale(pos[:y]) + 2);
+    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 3, scale(pos[:x]) + 12, scale(pos[:y]) + 3);
+    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 4, scale(pos[:x]) + 12, scale(pos[:y]) + 4);
+    		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 5, scale(pos[:x]) + 13, scale(pos[:y]) + 5);
+    		dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]) + 6, scale(pos[:x]) + 13, scale(pos[:y]) + 6);
+    		dc.drawLine(scale(pos[:x]) + 9, scale(pos[:y]) + 7, scale(pos[:x]) + 13, scale(pos[:y]) + 7);
+			dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]) + 8, scale(pos[:x]) + 13, scale(pos[:y]) + 8);
+			dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 9, scale(pos[:x]) + 13, scale(pos[:y]) + 9);
+			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 10, scale(pos[:x]) + 12, scale(pos[:y]) + 10);
+			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 11, scale(pos[:x]) + 12, scale(pos[:y]) + 11);
+			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 12, scale(pos[:x]) + 11, scale(pos[:y]) + 12);
+			dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 13, scale(pos[:x]) + 9, scale(pos[:y]) + 13); 
+    	} else if (dir == :right) {
+    		dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 1, scale(pos[:x]) + 10, scale(pos[:y]) + 1);
+    		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 2, scale(pos[:x]) + 12, scale(pos[:y]) + 2);
+    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 3, scale(pos[:x]) + 13, scale(pos[:y]) + 3);
+    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 4, scale(pos[:x]) + 13, scale(pos[:y]) + 4);
+    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 5, scale(pos[:x]) + 11, scale(pos[:y]) + 5);
+    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 6, scale(pos[:x]) + 8, scale(pos[:y]) + 6);
+    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 7, scale(pos[:x]) + 5, scale(pos[:y]) + 7); //
+			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 8, scale(pos[:x]) + 8, scale(pos[:y]) + 8);
+			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 9, scale(pos[:x]) + 11, scale(pos[:y]) + 9);
+			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 10, scale(pos[:x]) + 13, scale(pos[:y]) + 10);
+			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 11, scale(pos[:x]) + 13, scale(pos[:y]) + 11);
+			dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 12, scale(pos[:x]) + 12, scale(pos[:y]) + 12);
+			dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 13, scale(pos[:x]) + 10, scale(pos[:y]) + 13); 
+    	} else {
+    	}
+        //dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, bm[dir]);
     }
 
     // Find next position according to current playground situation.

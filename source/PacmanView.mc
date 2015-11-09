@@ -43,13 +43,7 @@ class PacmanView extends Ui.WatchFace {
         pacman.init(
         	playground,
         	{:x => 7, :y => 6},
-        	:right,
-        	{
-        		:up => Ui.loadResource(Rez.Drawables.pacman_u),
-        		:right => Ui.loadResource(Rez.Drawables.pacman_r),
-        		:down => Ui.loadResource(Rez.Drawables.pacman_d),
-        		:left => Ui.loadResource(Rez.Drawables.pacman_l)
-            }
+        	:right
          );
          movables[0] = pacman;
 

@@ -3,11 +3,6 @@
 
     <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
     
-    <bitmap id="pacman_u" filename="images/pacman_u.png" />
-    <bitmap id="pacman_d" filename="images/pacman_d.png" />
-    <bitmap id="pacman_l" filename="images/pacman_l.png" />
-    <bitmap id="pacman_r" filename="images/pacman_r.png" />
-    
     <bitmap id="ghost_brown_u" filename="images/ghost_brown_u.png" />
     <bitmap id="ghost_brown_d" filename="images/ghost_brown_d.png" />
     <bitmap id="ghost_brown_l" filename="images/ghost_brown_l.png" />
