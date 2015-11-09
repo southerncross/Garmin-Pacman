@@ -52,12 +52,7 @@ class PacmanView extends Ui.WatchFace {
         	playground,
         	{:x => 1, :y => 3},
         	:right,
-        	{
-        		:up => Ui.loadResource(Rez.Drawables.ghost_red_u),
-        		:right => Ui.loadResource(Rez.Drawables.ghost_red_r),
-        		:down => Ui.loadResource(Rez.Drawables.ghost_red_d),
-        		:left => Ui.loadResource(Rez.Drawables.ghost_red_l)
-        	}
+        	Gfx.COLOR_RED
         );
         movables[1] = ghostRed;
 
@@ -66,40 +61,25 @@ class PacmanView extends Ui.WatchFace {
         	playground,
         	{:x => 13, :y => 3},
         	:right,
-        	{
-        		:up => Ui.loadResource(Rez.Drawables.ghost_cyan_u),
-        		:right => Ui.loadResource(Rez.Drawables.ghost_cyan_r),
-        		:down => Ui.loadResource(Rez.Drawables.ghost_cyan_d),
-        		:left => Ui.loadResource(Rez.Drawables.ghost_cyan_l)
-        	}
+        	0x00FFFF
         );
         movables[2] = ghostCyan;
 
-        var ghostBrown = new Ghost();
-        ghostBrown.init(
+        var ghostOrange = new Ghost();
+        ghostOrange.init(
         	playground,
         	{:x => 1, :y => 11},
         	:right,
-        	{
-        		:up => Ui.loadResource(Rez.Drawables.ghost_brown_u),
-        		:right => Ui.loadResource(Rez.Drawables.ghost_brown_r),
-        		:down => Ui.loadResource(Rez.Drawables.ghost_brown_d),
-        		:left => Ui.loadResource(Rez.Drawables.ghost_brown_l)
-        	}
+        	Gfx.COLOR_ORANGE
         );
-        movables[3] = ghostBrown;
+        movables[3] = ghostOrange;
 
         var ghostPink = new Ghost();
         ghostPink.init(
         	playground,
         	{:x => 13, :y => 11},
         	:right,
-        	{
-        		:up => Ui.loadResource(Rez.Drawables.ghost_pink_u),
-        		:right => Ui.loadResource(Rez.Drawables.ghost_pink_r),
-        		:down => Ui.loadResource(Rez.Drawables.ghost_pink_d),
-        		:left => Ui.loadResource(Rez.Drawables.ghost_pink_l)
-        	}
+        	Gfx.COLOR_PINK
         );
         movables[4] = ghostPink;
     }

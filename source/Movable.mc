@@ -116,6 +116,7 @@ class Movable {
 
 // Pacman
 class Pacman extends Movable {
+	var color;
     // Initialize function.
     // @see Movable
     //
@@ -126,6 +127,7 @@ class Pacman extends Movable {
     // @return
     function init(plg, pos, dir) {
         Movable.init(plg, pos, dir);
+        color = 0xFFFF00;
         plg.set(pos, :pacman);
     }
 
@@ -166,7 +168,7 @@ class Pacman extends Movable {
     hidden function _draw(dc) {
     	plg.set(pos, :pacman);
 
-    	dc.setColor(Gfx.COLOR_YELLOW, Gfx.COLOR_BLACK);
+    	dc.setColor(color, Gfx.COLOR_BLACK);
     	if (dir == :up) {
     		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 4, scale(pos[:x]) + 1, scale(pos[:y]) + 9);
     		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 2, scale(pos[:x]) + 2, scale(pos[:y]) + 11);
@@ -225,7 +227,6 @@ class Pacman extends Movable {
 			dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 13, scale(pos[:x]) + 10, scale(pos[:y]) + 13); 
     	} else {
     	}
-        //dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, bm[dir]);
     }
 
     // Find next position according to current playground situation.
@@ -273,13 +274,7 @@ class Pacman extends Movable {
 
 // Ghost
 class Ghost extends Movable {
-    // Bitmap resources which is used for draw pacman.
-    // It has four pictures for each directions in total.
-    //
-    // TODO: ConnectIQ will does some differential computation of bitmap color
-    // which leads to impure color. We should use vector drawing instead of
-    // bitmap.
-    var bm;
+	var color;
 
     // Initialize function.
     // @see Movable
@@ -289,9 +284,9 @@ class Ghost extends Movable {
     // @param dir[in] The initial direction
     // @poram bm[in] The bitmap resources.
     // @return
-    function init(plg, pos, dir, bm) {
+    function init(plg, pos, dir, color) {
         Movable.init(plg, pos, dir);
-        self.bm = bm;
+        self.color = color;
 
         plg.set(pos, :ghost);
     }
@@ -333,7 +328,63 @@ class Ghost extends Movable {
     // @return
     hidden function _draw(dc) {
     	plg.set(pos, :ghost);
-        dc.drawBitmap(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, bm[dir]);
+
+    	// body
+    	dc.setColor(color, Gfx.COLOR_BLACK);
+    	dc.drawLine(scale(pos[:x]), scale(pos[:y]) + 6, scale(pos[:x]), scale(pos[:y]) + 13);
+    	dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 3, scale(pos[:x]) + 1, scale(pos[:y]) + 14);
+    	dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 2, scale(pos[:x]) + 2, scale(pos[:y]) + 14);
+    	dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 1, scale(pos[:x]) + 3, scale(pos[:y]) + 13);
+    	dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 1, scale(pos[:x]) + 4, scale(pos[:y]) + 12);
+    	dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]), scale(pos[:x]) + 5, scale(pos[:y]) + 13);
+    	dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]), scale(pos[:x]) + 6, scale(pos[:y]) + 14);
+    	dc.drawLine(scale(pos[:x]) + 7, scale(pos[:y]), scale(pos[:x]) + 7, scale(pos[:y]) + 14);
+    	dc.drawLine(scale(pos[:x]) + 8, scale(pos[:y]), scale(pos[:x]) + 8, scale(pos[:y]) + 13);
+    	dc.drawLine(scale(pos[:x]) + 9, scale(pos[:y]) + 1, scale(pos[:x]) + 9, scale(pos[:y]) + 12);
+    	dc.drawLine(scale(pos[:x]) + 10, scale(pos[:y]) + 1, scale(pos[:x]) + 10, scale(pos[:y]) + 13);
+    	dc.drawLine(scale(pos[:x]) + 11, scale(pos[:y]) + 2, scale(pos[:x]) + 11, scale(pos[:y]) + 14);
+    	dc.drawLine(scale(pos[:x]) + 12, scale(pos[:y]) + 3, scale(pos[:x]) + 12, scale(pos[:y]) + 14);
+    	dc.drawLine(scale(pos[:x]) + 13, scale(pos[:y]) + 6, scale(pos[:x]) + 13, scale(pos[:y]) + 13);
+
+    	// eye
+    	if (dir == :up) {
+    		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
+    		dc.fillRectangle(scale(pos[:x]) + 2, scale(pos[:y]) + 4, 4, 3);
+			dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 3, 2, 5);
+			dc.fillRectangle(scale(pos[:x]) + 8, scale(pos[:y]) + 4, 4, 3);
+			dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 3, 2, 5);
+			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    		dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 3, 2, 2);
+    		dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 3, 2, 2);
+    	} else if (dir == :down) {
+    		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
+    	   	dc.fillRectangle(scale(pos[:x]) + 2, scale(pos[:y]) + 4, 4, 3);
+			dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 3, 2, 5);
+			dc.fillRectangle(scale(pos[:x]) + 8, scale(pos[:y]) + 4, 4, 3);
+			dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 3, 2, 5);
+			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    		dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 6, 2, 2);
+    		dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 6, 2, 2);
+    	} else if (dir == :left) {
+    		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
+    		dc.fillRectangle(scale(pos[:x]) + 1, scale(pos[:y]) + 4, 4, 3);
+			dc.fillRectangle(scale(pos[:x]) + 2, scale(pos[:y]) + 3, 2, 5);
+			dc.fillRectangle(scale(pos[:x]) + 7, scale(pos[:y]) + 4, 4, 3);
+			dc.fillRectangle(scale(pos[:x]) + 8, scale(pos[:y]) + 3, 2, 5);
+			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    		dc.fillRectangle(scale(pos[:x]) + 1, scale(pos[:y]) + 5, 2, 2);
+    		dc.fillRectangle(scale(pos[:x]) + 7, scale(pos[:y]) + 5, 2, 2);
+    	} else if (dir == :right) {
+    		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
+    		dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 4, 4, 3);
+			dc.fillRectangle(scale(pos[:x]) + 4, scale(pos[:y]) + 3, 2, 5);
+			dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 4, 4, 3);
+			dc.fillRectangle(scale(pos[:x]) + 10, scale(pos[:y]) + 3, 2, 5);
+			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    		dc.fillRectangle(scale(pos[:x]) + 5, scale(pos[:y]) + 5, 2, 2);
+    		dc.fillRectangle(scale(pos[:x]) + 11, scale(pos[:y]) + 5, 2, 2);
+    	} else {
+    	}
     }
 
     // Find next position according to current playground situation.
