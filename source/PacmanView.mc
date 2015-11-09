@@ -33,7 +33,7 @@ class PacmanView extends Ui.WatchFace {
         var ghostRed = new Ghost();
         ghostRed.init(
         	playground,
-        	{:x => 3, :y => 9},
+        	{:x => 1, :y => 3},
         	:right,
         	{
         		:up => Ui.loadResource(Rez.Drawables.ghost_red_u),
@@ -47,7 +47,7 @@ class PacmanView extends Ui.WatchFace {
         var ghostCyan = new Ghost();
         ghostCyan.init(
         	playground,
-        	{:x => 4, :y => 9},
+        	{:x => 13, :y => 3},
         	:right,
         	{
         		:up => Ui.loadResource(Rez.Drawables.ghost_cyan_u),
@@ -61,7 +61,7 @@ class PacmanView extends Ui.WatchFace {
         var ghostBrown = new Ghost();
         ghostBrown.init(
         	playground,
-        	{:x => 3, :y => 10},
+        	{:x => 1, :y => 11},
         	:right,
         	{
         		:up => Ui.loadResource(Rez.Drawables.ghost_brown_u),
@@ -75,7 +75,7 @@ class PacmanView extends Ui.WatchFace {
         var ghostPink = new Ghost();
         ghostPink.init(
         	playground,
-        	{:x => 4, :y => 10},
+        	{:x => 13, :y => 11},
         	:right,
         	{
         		:up => Ui.loadResource(Rez.Drawables.ghost_pink_u),
