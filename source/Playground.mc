@@ -6,6 +6,8 @@ class Playground {
 	// Playground map, 2d array actually.
 	var plg;
 
+	var bm;
+
 	var hasDrewPlg;
 
 	// Initialize function.
@@ -13,8 +15,10 @@ class Playground {
 	// initialize the object explicitly.
 	//
 	// @return
-	function init() {
+	function init(bm) {
 		hasDrewPlg = false;
+
+		self.bm = bm;
 
 		var tpl = [
 			"| ++ || || ++ |",
@@ -74,6 +78,15 @@ class Playground {
  		if (!hasDrewPlg) {
 			_drawPlg(dc);
 		}
+
+		var clockTime = Sys.getClockTime();
+        var hour, min, result;
+
+        hour = clockTime.hour;
+        min = clockTime.min;
+
+		dc.drawBitmap(4 * UNIT_SIZE, 3 * UNIT_SIZE, bm[hour / 10]);
+		dc.drawBitmap(8 * UNIT_SIZE, 3 * UNIT_SIZE, bm[hour % 10]);
  	}
 
  	function get(pos) {
@@ -85,7 +98,7 @@ class Playground {
  	}
 
  	hidden function _drawPlg(dc) {
- 		dc.setColor(Gfx.COLOR_BLUE, Gfx.COLOR_BLACK);
+ 		dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
 
  		for (var i = 0; i < SCREEN_UNIT; i++) {
  			for (var j = 0; j < SCREEN_UNIT; j++) {

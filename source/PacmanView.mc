@@ -12,7 +12,18 @@ class PacmanView extends Ui.WatchFace {
     //! Load your resources here
     function onLayout(dc) {
         playground = new Playground();
-        playground.init();
+        playground.init([
+        	Ui.loadResource(Rez.Drawables.hour_0),
+        	Ui.loadResource(Rez.Drawables.hour_1),
+        	Ui.loadResource(Rez.Drawables.hour_2),
+        	Ui.loadResource(Rez.Drawables.hour_3),
+        	Ui.loadResource(Rez.Drawables.hour_4),
+        	Ui.loadResource(Rez.Drawables.hour_5),
+        	Ui.loadResource(Rez.Drawables.hour_6),
+        	Ui.loadResource(Rez.Drawables.hour_7),
+        	Ui.loadResource(Rez.Drawables.hour_8),
+        	Ui.loadResource(Rez.Drawables.hour_9)
+        ]);
 
 		movables = new [5];
 

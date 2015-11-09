@@ -28,6 +28,15 @@
     <bitmap id="ghost_red_l" filename="images/ghost_red_l.png" />
     <bitmap id="ghost_red_r" filename="images/ghost_red_r.png" />
     
-    <bitmap id="empty_unit" filename="images/empty_unit.png"></bitmap>
+    <bitmap id="hour_0" filename="images/hour_0.png"></bitmap>
+    <bitmap id="hour_1" filename="images/hour_1.png"></bitmap>
+    <bitmap id="hour_2" filename="images/hour_2.png"></bitmap>
+    <bitmap id="hour_3" filename="images/hour_3.png"></bitmap>
+    <bitmap id="hour_4" filename="images/hour_4.png"></bitmap>
+    <bitmap id="hour_5" filename="images/hour_5.png"></bitmap>
+    <bitmap id="hour_6" filename="images/hour_6.png"></bitmap>
+    <bitmap id="hour_7" filename="images/hour_7.png"></bitmap>
+    <bitmap id="hour_8" filename="images/hour_8.png"></bitmap>
+    <bitmap id="hour_9" filename="images/hour_9.png"></bitmap>
 
 </resources>
