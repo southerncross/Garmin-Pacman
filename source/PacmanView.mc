@@ -23,6 +23,18 @@ class PacmanView extends Ui.WatchFace {
         	Ui.loadResource(Rez.Drawables.hour_7),
         	Ui.loadResource(Rez.Drawables.hour_8),
         	Ui.loadResource(Rez.Drawables.hour_9)
+        ],
+        [
+        	Ui.loadResource(Rez.Drawables.minute_0),
+        	Ui.loadResource(Rez.Drawables.minute_1),
+        	Ui.loadResource(Rez.Drawables.minute_2),
+        	Ui.loadResource(Rez.Drawables.minute_3),
+        	Ui.loadResource(Rez.Drawables.minute_4),
+        	Ui.loadResource(Rez.Drawables.minute_5),
+        	Ui.loadResource(Rez.Drawables.minute_6),
+        	Ui.loadResource(Rez.Drawables.minute_7),
+        	Ui.loadResource(Rez.Drawables.minute_8),
+        	Ui.loadResource(Rez.Drawables.minute_9)
         ]);
 
 		movables = new [5];

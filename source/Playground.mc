@@ -6,7 +6,8 @@ class Playground {
 	// Playground map, 2d array actually.
 	var plg;
 
-	var bm;
+	var hBm;
+	var mBm;
 
 	var hasDrewPlg;
 
@@ -15,10 +16,11 @@ class Playground {
 	// initialize the object explicitly.
 	//
 	// @return
-	function init(bm) {
+	function init(hBm, mBm) {
 		hasDrewPlg = false;
 
-		self.bm = bm;
+		self.hBm = hBm;
+		self.mBm = mBm;
 
 		var tpl = [
 			"| ++ || || ++ |",
@@ -80,13 +82,23 @@ class Playground {
 		}
 
 		var clockTime = Sys.getClockTime();
-        var hour, min, result;
 
-        hour = clockTime.hour;
-        min = clockTime.min;
+        var hour = clockTime.hour;
+        var minute = clockTime.min;
 
-		dc.drawBitmap(4 * UNIT_SIZE, 3 * UNIT_SIZE, bm[hour / 10]);
-		dc.drawBitmap(8 * UNIT_SIZE, 3 * UNIT_SIZE, bm[hour % 10]);
+		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+		
+		dc.fillRectangle(4 * UNIT_SIZE, 3 * UNIT_SIZE, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
+		dc.drawBitmap(4 * UNIT_SIZE, 3 * UNIT_SIZE, hBm[hour / 10]);
+		
+		dc.fillRectangle(8 * UNIT_SIZE, 3 * UNIT_SIZE, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
+		dc.drawBitmap(8 * UNIT_SIZE, 3 * UNIT_SIZE, hBm[hour % 10]);
+		
+		dc.fillRectangle(6 * UNIT_SIZE, 8 * UNIT_SIZE, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
+		dc.drawBitmap(6 * UNIT_SIZE, 8 * UNIT_SIZE, mBm[minute / 10]);
+		
+		dc.fillRectangle(9 * UNIT_SIZE, 8 * UNIT_SIZE, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
+		dc.drawBitmap(9 * UNIT_SIZE, 8 * UNIT_SIZE, mBm[minute % 10]);
  	}
 
  	function get(pos) {
