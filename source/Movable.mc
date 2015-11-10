@@ -69,16 +69,6 @@ function getNextPosition(pos, dir) {
 	return nextPos;
 }
 
-// Scale the coordination.
-// Since we divide the whole map into several units, so we have to scale the
-// coordination with the size of unit.
-//
-// @param c[in] coordination value
-// @return scaled screen coordination
-function scale(c) {
-	return c * UNIT_SIZE;
-}
-
 // Movable indicates anything on the playground that is movable:)
 // Every movable object knows the playground map and its position.
 class Movable {

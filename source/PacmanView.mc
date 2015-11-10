@@ -9,10 +9,13 @@ class PacmanView extends Ui.WatchFace {
 
 	var playground;
 
+	var prevState;
+
     //! Load your resources here
     function onLayout(dc) {
+    	//Sys.println("onLayout");
         playground = new Playground();
-        playground.init([
+        playground.loadBm([
         	Ui.loadResource(Rez.Drawables.hour_0),
         	Ui.loadResource(Rez.Drawables.hour_1),
         	Ui.loadResource(Rez.Drawables.hour_2),
@@ -37,7 +40,18 @@ class PacmanView extends Ui.WatchFace {
         	Ui.loadResource(Rez.Drawables.minute_9)
         ]);
 
-		movables = new [5];
+        movables = new [5];
+
+        prevState = :onLayout;
+    }
+
+    //! Called when this View is brought to the foreground. Restore
+    //! the state of this View and prepare it to be shown. This includes
+    //! loading resources into memory.
+    function onShow() {
+    	//Sys.println("onShow");
+
+    	playground.init();
 
         var pacman = new Pacman();
         pacman.init(
@@ -45,7 +59,7 @@ class PacmanView extends Ui.WatchFace {
         	{:x => 7, :y => 6},
         	:right
          );
-         movables[0] = pacman;
+        movables[0] = pacman;
 
         var ghostRed = new Ghost();
         ghostRed.init(
@@ -82,38 +96,48 @@ class PacmanView extends Ui.WatchFace {
         	Gfx.COLOR_PINK
         );
         movables[4] = ghostPink;
-    }
 
-    //! Called when this View is brought to the foreground. Restore
-    //! the state of this View and prepare it to be shown. This includes
-    //! loading resources into memory.
-    function onShow() {
+        prevState = :onShow;
     }
 
     //! Update the view
     function onUpdate(dc) {
+    	if (prevState == :onHide) {
+    		return;
+    	}
+
+    	//Sys.println("onUpdate");
 
         playground.update(dc);
 
         for (var i = 0; i < 5; i++) {
         	movables[i].moveToNextPos(dc);
         }
+
+        prevState = :onUpdate;
     }
 
     //! Called when this View is removed from the screen. Save the
     //! state of this View here. This includes freeing resources from
     //! memory.
     function onHide() {
+    	//Sys.println("onHide");
     	for (var i = 0; i < 5; i++) {
         	movables[i].uninit();
+        	movables[i] = null;
         }
+        prevState = :onHide;
     }
 
     //! The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() {
+    	//Sys.println("onExitSleep");
+    	prevState = :onExitSleep;
     }
 
     //! Terminate any active timers and prepare for slow updates.
     function onEnterSleep() {
+    	//Sys.println("onEnterSleep");
+    	prevState = :onEnterSleep;
     }
 }

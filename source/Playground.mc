@@ -27,9 +27,6 @@ class Playground {
 	function init(hBm, mBm) {
 		hasDrewPlg = false;
 
-		self.hBm = hBm;
-		self.mBm = mBm;
-
 		// Puzzle template. The definition is:
 		//   " " indicates empty unit.
 		//   "|", "-" or "+" indicates barrier.
@@ -83,6 +80,11 @@ class Playground {
 	function uninit() {
 		itms = null;
 		plg = null;
+	}
+	
+	function loadBm(hBm, mBm) {
+		self.hBm = hBm;
+		self.mBm = mBm;
 	}
 
  	// Update playground.
@@ -175,6 +177,7 @@ class Playground {
  			var right = (x == SCREEN_UNIT - 1 || plg[x + 1][y] != :barrier);
 
 			// No other choice, T-T
+			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
  			if (top) {
  				if (left) {
  					dc.drawLine(X + 5, Y + 2, X + 7, Y + 2);
@@ -236,9 +239,17 @@ class Playground {
  				}
  			}
  		} else if (plg[x][y] == :hour){
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillRectangle(scale(x), scale(y), UNIT_SIZE, UNIT_SIZE);
  		} else if (plg[x][y] == :minute) {
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillRectangle(scale(x), scale(y), UNIT_SIZE, UNIT_SIZE);
  		} else if (plg[x][y] == :nil) {
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillRectangle(scale(x), scale(y), UNIT_SIZE, UNIT_SIZE);
  		} else {
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillRectangle(scale(x), scale(y), UNIT_SIZE, UNIT_SIZE);
  		}
  	}
  }
