@@ -146,7 +146,7 @@ class Playground {
 
  		for (var i = 0; i < SCREEN_UNIT; i++) {
  			for (var j = 0; j < SCREEN_UNIT; j++) {
- 				_drawUnit(dc, i, j);
+ 				_drawUnit(dc, {:x => i, :y => j});
  			}
  		}
 
@@ -160,9 +160,11 @@ class Playground {
 	// @param pos[in] position of the unit
 	// @return
  	hidden function _drawUnit(dc, pos) {
- 		if (plg[pos[:x]][pos[:y]] == :barrier) {
- 			var X = pos[:x] * UNIT_SIZE;
- 			var Y = pos[:y] * UNIT_SIZE;
+ 		var x = pos[:x];
+ 		var y = pos[:y];
+ 		if (plg[x][y] == :barrier) {
+ 			var X = x * UNIT_SIZE;
+ 			var Y = y * UNIT_SIZE;
  			// Whether the top border of this unit should be drew
  			var top = (y == 0 || plg[x][y - 1] != :barrier);
  			// Whether the bottom border of this unit should be drew
