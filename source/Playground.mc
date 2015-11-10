@@ -262,9 +262,6 @@ class Playground {
  		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
  		dc.fillRectangle(X, Y, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
 
- 		dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
- 		dc.setPenWidth(2);
-
  		if (val == 0) {
 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
  			dc.fillPolygon([
@@ -528,5 +525,262 @@ class Playground {
  	hidden function _drawMinute(dc, val, pos) {
  		var X = scale(pos[:x]);
  		var Y = scale(pos[:y]);
+
+ 		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 		dc.fillRectangle(X, Y, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
+
+ 		if (val == 0) {
+			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 4, Y + 1],
+ 				[X + 25, Y + 1],
+ 				[X + 23, Y + 4],
+ 				[X + 23, Y + 40],
+ 				[X + 25, Y + 43],
+ 				[X + 4, Y + 43],
+ 				[X + 1, Y + 40],
+ 				[X + 1, Y + 4],
+ 				[X + 4, Y + 1]
+ 			]);
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 5, Y + 5],
+ 				[X + 19, Y + 5],
+ 				[X + 19, Y + 39],
+ 				[X + 5, Y + 39],
+ 				[X + 5, Y + 5]
+ 			]);
+ 		} else if (val == 1) {
+			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 2, Y + 1],
+ 				[X + 17, Y + 1],
+ 				[X + 17, Y + 39],
+ 				[X + 25, Y + 39],
+ 				[X + 25, Y + 25],
+ 				[X + 27, Y + 24],
+ 				[X + 29, Y + 26],
+ 				[X + 29, Y + 42],
+ 				[X + 28, Y + 43],
+ 				[X + 2, Y + 43],
+ 				[X + 1, Y + 42],
+ 				[X + 1, Y + 40],
+ 				[X + 2, Y + 39],
+ 				[X + 12, Y + 39],
+ 				[X + 12, Y + 5],
+ 				[X + 2, Y + 5],
+ 				[X + 1, Y + 4],
+ 				[X + 1, Y + 2]
+ 			]);
+ 		} else if (val == 2) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 2, Y + 1],
+ 				[X + 25, Y + 1],
+ 				[X + 28, Y + 4],
+ 				[X + 28, Y + 21],
+ 				[X + 25, Y + 24],
+ 				[X + 5, Y + 24],
+ 				[X + 5, Y + 39],
+ 				[X + 27, Y + 39],
+ 				[X + 28, Y + 40],
+ 				[X + 28, Y + 42],
+ 				[X + 27, Y + 43],
+ 				[X + 1, Y + 43],
+ 				[X + 1, Y + 23],
+ 				[X + 4, Y + 20],
+ 				[X + 24, Y + 20],
+ 				[X + 24, Y + 5],
+ 				[X + 1, Y + 5],
+ 				[X + 1, Y + 2],
+ 				[X + 2, Y + 1]
+ 			]);
+ 		} else if (val == 3) {
+			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 2, Y + 1],
+ 				[X + 25, Y + 1],
+ 				[X + 28, Y + 4],
+ 				[X + 28, Y + 19],
+ 				[X + 26, Y + 22],
+ 				[X + 28, Y + 25],
+ 				[X + 28, Y + 40],
+ 				[X + 25, Y + 43],
+ 				[X + 2, Y + 43],
+ 				[X + 1, Y + 42],
+ 				[X + 1, Y + 40],
+ 				[X + 2, Y + 39],
+ 				[X + 24, Y + 39],
+ 				[X + 24, Y + 27],
+ 				[X + 21, Y + 24],
+ 				[X + 8, Y + 24],
+ 				[X + 7, Y + 23],
+ 				[X + 7, Y + 21],
+ 				[X + 8, Y + 20],
+ 				[X + 21, Y + 20],
+ 				[X + 24, Y + 17],
+ 				[X + 24, Y + 5],
+ 				[X + 2, Y + 5],
+ 				[X + 1, Y + 4],
+ 				[X + 1, Y + 2],
+ 				[X + 2, Y + 1]
+ 			]);
+ 		} else if (val == 4) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 4, Y + 1],
+ 				[X + 6, Y + 1],
+ 				[X + 7, Y + 2],
+ 				[X + 7, Y + 24],
+ 				[X + 20, Y + 24],
+ 				[X + 20, Y + 6],
+ 				[X + 24, Y + 6],
+ 				[X + 24, Y + 23],
+ 				[X + 27, Y + 26],
+ 				[X + 27, Y + 28],
+ 				[X + 24, Y + 30],
+ 				[X + 24, Y + 42],
+ 				[X + 23, Y + 43],
+ 				[X + 21, Y + 43],
+ 				[X + 20, Y + 42],
+ 				[X + 20, Y + 30],
+ 				[X + 3, Y + 30],
+ 				[X + 3, Y + 2],
+ 				[X + 4, Y + 1]
+ 			]);
+ 		} else if (val == 5) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 6, Y + 1],
+ 				[X + 27, Y + 1],
+ 				[X + 28, Y + 2],
+ 				[X + 28, Y + 4],
+ 				[X + 27, Y + 5],
+ 				[X + 11, Y + 5],
+ 				[X + 11, Y + 20],
+ 				[X + 25, Y + 20],
+ 				[X + 28, Y + 23],
+ 				[X + 28, Y + 40],
+ 				[X + 25, Y + 43],
+ 				[X + 7, Y + 43],
+ 				[X + 1, Y + 40],
+ 				[X + 1, Y + 37],
+ 				[X + 2, Y + 36],
+ 				[X + 4, Y + 36],
+ 				[X + 10, Y + 39],
+ 				[X + 24, Y + 39],
+ 				[X + 24, Y + 24],
+ 				[X + 6, Y + 24],
+ 				[X + 6, Y + 1]
+ 			]);
+ 		} else if (val == 6) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 2, Y + 1],
+ 				[X + 7, Y + 1],
+ 				[X + 8, Y + 2],
+ 				[X + 8, Y + 4],
+ 				[X + 5, Y + 6],
+ 				[X + 5, Y + 24],
+ 				[X + 26, Y + 24],
+ 				[X + 28, Y + 26],
+ 				[X + 28, Y + 42],
+ 				[X + 27, Y + 43],
+ 				[X + 2, Y + 43],
+ 				[X + 1, Y + 42],
+ 				[X + 1, Y + 2],
+ 				[X + 2, Y + 1]
+ 			]);
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 5, Y + 29],
+ 				[X + 24, Y + 29],
+ 				[X + 24, Y + 39],
+ 				[X + 5, Y + 39],
+ 				[X + 5, Y + 29]
+ 			]);
+ 		} else if (val == 7) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 1, Y + 2],
+ 				[X + 2, Y + 1],
+ 				[X + 28, Y + 1],
+ 				[X + 28, Y + 18],
+ 				[X + 17, Y + 27],
+ 				[X + 17, Y + 40],
+ 				[X + 16, Y + 43],
+ 				[X + 13, Y + 43],
+ 				[X + 12, Y + 42],
+ 				[X + 12, Y + 26],
+ 				[X + 23, Y + 17],
+ 				[X + 23, Y + 5],
+ 				[X + 5, Y + 5],
+ 				[X + 5, Y + 6],
+ 				[X + 4, Y + 7],
+ 				[X + 2, Y + 7],
+ 				[X + 1, Y + 6],
+ 				[X + 1, Y + 2]
+ 			]);
+ 		} else if (val == 8) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 8, Y + 1],
+ 				[X + 21, Y + 1],
+ 				[X + 23, Y + 3],
+ 				[X + 23, Y + 20],
+ 				[X + 28, Y + 23],
+ 				[X + 28, Y + 40],
+ 				[X + 25, Y + 43],
+ 				[X + 4, Y + 43],
+ 				[X + 1, Y + 40],
+ 				[X + 1, Y + 23],
+ 				[X + 6, Y + 20],
+ 				[X + 6, Y + 3],
+ 				[X + 8, Y + 1]
+ 			]);
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 11, Y + 5],
+ 				[X + 18, Y + 5],
+ 				[X + 18, Y + 20],
+ 				[X + 11, Y + 20],
+ 				[X + 11, Y + 5]
+ 			]);
+ 			dc.fillPolygon([
+ 				[X + 5, Y + 24],
+ 				[X + 24, Y + 24],
+ 				[X + 24, Y + 39],
+ 				[X + 5, Y + 39],
+ 				[X + 5, Y + 24]
+ 			]);
+ 		} else if (val == 9) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 2, Y + 1],
+ 				[X + 27, Y + 1],
+ 				[X + 28, Y + 2],
+ 				[X + 28, Y + 42],
+ 				[X + 27, Y + 43],
+ 				[X + 22, Y + 43],
+ 				[X + 21, Y + 42],
+ 				[X + 21, Y + 40],
+ 				[X + 22, Y + 39],
+ 				[X + 23, Y + 39],
+ 				[X + 23, Y + 19],
+ 				[X + 2, Y + 19],
+ 				[X + 1, Y + 18],
+ 				[X + 1, Y + 2],
+ 				[X + 2, Y + 1]
+ 			]);
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 5, Y + 5],
+ 				[X + 24, Y + 5],
+ 				[X + 24, Y + 15],
+ 				[X + 5, Y + 15],
+ 				[X + 5, Y + 5]
+ 			]);
+ 		} else {
+ 		}
  	}
  }
