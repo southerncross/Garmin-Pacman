@@ -271,7 +271,7 @@ class Pacman extends Movable {
         	cnt++;
         }
         if (:down != dir && _isDirectionValid(:down)) {
-        	dirs[cnt] = :right;
+        	dirs[cnt] = :down;
         	cnt++;
         }
         if (:left != dir && _isDirectionValid(:left)) {
@@ -289,7 +289,7 @@ class Pacman extends Movable {
     }
 
 	// Decide whether the specified direction is valid for going.
-	// 
+	//
 	// @param dir[in] direction for going.
 	// @return true or false.
     hidden function _isDirectionValid(dir) {
@@ -432,7 +432,7 @@ class Ghost extends Movable {
 		if (_isDirectionValid(dir)) {
 			return getNextPosition(pos, dir);
 		}
-		
+
 		// If previous direction is invalid, pacman will find and choose one
 		// other direction to move.
 		// TODO: Currently we just let pacman hang around, the only strategy
@@ -450,7 +450,7 @@ class Ghost extends Movable {
         	cnt++;
         }
         if (:down != dir && _isDirectionValid(:down)) {
-        	dirs[cnt] = :right;
+        	dirs[cnt] = :down;
         	cnt++;
         }
         if (:left != dir && _isDirectionValid(:left)) {
@@ -468,7 +468,7 @@ class Ghost extends Movable {
     }
 
 	// Decide whether the specified direction is valid for going.
-	// 
+	//
 	// @param dir[in] direction for going.
 	// @return true or false.
     hidden function _isDirectionValid() {

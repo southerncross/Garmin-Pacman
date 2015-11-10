@@ -9,7 +9,7 @@ class Playground {
 	// Bitmap resource of hour.
 	// TODO: Replace it with hardcoded drawing.
 	var hBm;
-	
+
 	// Bitmap resource of minute.
 	// TODO: Replace it with hardcoded drawing.
 	var mBm;
