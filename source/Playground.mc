@@ -6,26 +6,18 @@ class Playground {
 	// Playground map, 2d array actually.
 	var plg;
 
-	// Bitmap resource of hour.
-	// TODO: Replace it with hardcoded drawing.
-	var hBm;
+	var prevHours;
 
-	// Bitmap resource of minute.
-	// TODO: Replace it with hardcoded drawing.
-	var mBm;
-
-	// Remember whether the background has been drew. Since the background
-	// (barrier) does not change and thus we do not need to redraw it every
-	// time.
-	var hasDrewPlg;
+	var prevMinutes;
 
 	// Initialize function.
 	// The built-in initialize function is limited, so we decide to
 	// initialize the object explicitly.
 	//
 	// @return
-	function init(hBm, mBm) {
-		hasDrewPlg = false;
+	function init() {
+		prevHours = [-1, -1];
+		prevMinutes = [-1, -1];
 
 		// Puzzle template. The definition is:
 		//   " " indicates empty unit.
@@ -81,7 +73,7 @@ class Playground {
 		itms = null;
 		plg = null;
 	}
-	
+
 	function loadBm(hBm, mBm) {
 		self.hBm = hBm;
 		self.mBm = mBm;
@@ -92,32 +84,11 @@ class Playground {
  	// For example, time should be checked and updated.
  	//
  	// @param dc[in] device context which is used for drawing
+	// @param lazy[in] in lazy mode, time will not be drew if it equals to previous one
  	// @return
- 	function update(dc) {
- 		if (!hasDrewPlg) {
-			_drawPlg(dc);
-		}
-
-		// Update & draw time.
-		var clockTime = Sys.getClockTime();
-        var hour = clockTime.hour;
-        var minute = clockTime.min;
-
-		// TODO: Currently we use bitmap resource, though it is memory expensive.
-		// I will replae it with hardcode drawing in the future.
-		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-		// Draw hour, first number.
-		dc.fillRectangle(4 * UNIT_SIZE, 3 * UNIT_SIZE, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
-		dc.drawBitmap(4 * UNIT_SIZE, 3 * UNIT_SIZE, hBm[hour / 10]);
-		// Draw hour, second number.
-		dc.fillRectangle(8 * UNIT_SIZE, 3 * UNIT_SIZE, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
-		dc.drawBitmap(8 * UNIT_SIZE, 3 * UNIT_SIZE, hBm[hour % 10]);
-		// Draw minute, first number.
-		dc.fillRectangle(6 * UNIT_SIZE, 8 * UNIT_SIZE, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
-		dc.drawBitmap(6 * UNIT_SIZE, 8 * UNIT_SIZE, mBm[minute / 10]);
-		// Draw minute, second number.
-		dc.fillRectangle(9 * UNIT_SIZE, 8 * UNIT_SIZE, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
-		dc.drawBitmap(9 * UNIT_SIZE, 8 * UNIT_SIZE, mBm[minute % 10]);
+ 	function update(dc, lazy) {
+ 		_drawBackground(dc, lazy);
+		_drawTime(dc, lazy);
  	}
 
 	// Return the symbol at specified position.
@@ -142,8 +113,13 @@ class Playground {
 	// every time.
 	//
 	// @param dc[in] the device context for drawing
+	// @param lazy[in] in lazy mode, background will not be drew
 	// @return
- 	hidden function _drawPlg(dc) {
+ 	hidden function _drawBackground(dc, lazy) {
+ 		if (lazy) {
+ 			return;
+ 		}
+
  		dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
 
  		for (var i = 0; i < SCREEN_UNIT; i++) {
@@ -151,8 +127,32 @@ class Playground {
  				_drawUnit(dc, {:x => i, :y => j});
  			}
  		}
+ 	}
 
- 		hasDrewPlg = true;
+ 	hidden function _drawTime(dc, lazy) {
+ 		// Update & draw time.
+		var clockTime = Sys.getClockTime();
+        var h1 = clockTime.hour / 10;
+        var h2 = clockTime.hour % 10;
+        var m1 = clockTime.min / 10;
+        var m2 = clockTime.min % 10;
+
+        if (!lazy || h1 != prevHours[0]) {
+        	_drawHour(dc, h1, {:x => 4, :y => 3});
+        	prevHours[0] = h1;
+        }
+        if (!lazy || h2 != prevHours[1]) {
+        	_drawHour(dc, h2, {:x => 8, :y => 3});
+        	prevHours[1] = h2;
+        }
+        if (!lazy || m1 != prevMinutes[0]) {
+        	_drawMinute(dc, m1, {:x => 6, :y => 8});
+        	prevMinutes[0] = m1;
+        }
+        if (!lazy || m2 != prevMinutes[1]) {
+        	_drawMinute(dc, m2, {:x => 9, :y => 8});
+        	prevMinutes[1] = m2;
+        }
  	}
 
 	// Draw a unit of screen.
@@ -177,6 +177,8 @@ class Playground {
  			var right = (x == SCREEN_UNIT - 1 || plg[x + 1][y] != :barrier);
 
 			// No other choice, T-T
+			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillRectangle(scale(x), scale(y), UNIT_SIZE, UNIT_SIZE);
 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
  			if (top) {
  				if (left) {
@@ -251,5 +253,280 @@ class Playground {
  			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
  			dc.fillRectangle(scale(x), scale(y), UNIT_SIZE, UNIT_SIZE);
  		}
+ 	}
+
+ 	hidden function _drawHour(dc, val, pos) {
+ 		var X = scale(pos[:x]);
+ 		var Y = scale(pos[:y]);
+
+ 		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 		dc.fillRectangle(X, Y, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
+
+ 		dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 		dc.setPenWidth(2);
+
+ 		if (val == 0) {
+			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 7, Y + 1],
+ 				[X + 37, Y + 1],
+ 				[X + 43, Y + 6],
+ 				[X + 43, Y + 52],
+ 				[X + 37, Y + 58],
+ 				[X + 7, Y + 58],
+ 				[X + 1, Y + 52],
+ 				[X + 1, Y + 6],
+ 				[X + 7, Y + 1]
+ 			]);
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 9, Y + 7],
+ 				[X + 35, Y + 7],
+ 				[X + 35, Y + 52],
+ 				[X + 9, Y + 52],
+ 				[X + 9, Y + 7]
+ 			]);
+ 		} else if (val == 1) {
+			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 4, Y + 1],
+ 				[X + 26, Y + 1],
+ 				[X + 26, Y + 52],
+ 				[X + 35, Y + 52],
+ 				[X + 35, Y + 35],
+ 				[X + 37, Y + 33],
+ 				[X + 41, Y + 33],
+ 				[X + 43, Y + 35],
+ 				[X + 43, Y + 55],
+ 				[X + 40, Y + 58],
+ 				[X + 4, Y + 58],
+ 				[X + 1, Y + 56],
+ 				[X + 1, Y + 52],
+ 				[X + 18, Y + 52],
+ 				[X + 18, Y + 7],
+ 				[X + 3, Y + 7],
+ 				[X + 1, Y + 5],
+ 				[X + 1, Y + 4],
+ 				[X + 4, Y + 1]
+ 			]);
+ 		} else if (val == 2) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 3, Y + 1],
+ 				[X + 37, Y + 1],
+ 				[X + 43, Y + 6],
+ 				[X + 43, Y + 28],
+ 				[X + 35, Y + 33],
+ 				[X + 9, Y + 33],
+ 				[X + 9, Y + 51],
+ 				[X + 35, Y + 51],
+ 				[X + 43, Y + 53],
+ 				[X + 43, Y + 56],
+ 				[X + 40, Y + 58],
+ 				[X + 1, Y + 58],
+ 				[X + 1, Y + 31],
+ 				[X + 7, Y + 26],
+ 				[X + 34, Y + 26],
+ 				[X + 34, Y + 8],
+ 				[X + 5, Y + 8],
+ 				[X + 1, Y + 6],
+ 				[X + 1, Y + 3],
+ 				[X + 3, Y + 1]
+ 			]);
+ 		} else if (val == 3) {
+			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 4, Y + 1],
+ 				[X + 37, Y + 1],
+ 				[X + 43, Y + 6],
+ 				[X + 43, Y + 25],
+ 				[X + 40, Y + 29],
+ 				[X + 40, Y + 30],
+ 				[X + 43, Y + 34],
+ 				[X + 43, Y + 53],
+ 				[X + 37, Y + 58],
+ 				[X + 4, Y + 58],
+ 				[X + 1, Y + 56],
+ 				[X + 1, Y + 54],
+ 				[X + 5, Y + 51],
+ 				[X + 35, Y + 51],
+ 				[X + 35, Y + 33],
+ 				[X + 13, Y + 33],
+ 				[X + 10, Y + 31],
+ 				[X + 10, Y + 28],
+ 				[X + 13, Y + 26],
+ 				[X + 35, Y + 26],
+ 				[X + 35, Y + 9],
+ 				[X + 5, Y + 9],
+ 				[X + 1, Y + 7],
+ 				[X + 1, Y + 3],
+ 				[X + 4, Y + 1]
+ 			]);
+ 		} else if (val == 4) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 6, Y + 1],
+ 				[X + 9, Y + 1],
+ 				[X + 11, Y + 3],
+ 				[X + 11, Y + 33],
+ 				[X + 29, Y + 33],
+ 				[X + 29, Y + 10],
+ 				[X + 32, Y + 7],
+ 				[X + 34, Y + 7],
+ 				[X + 37, Y + 10],
+ 				[X + 37, Y + 34],
+ 				[X + 41, Y + 34],
+ 				[X + 41, Y + 38],
+ 				[X + 37, Y + 40],
+ 				[X + 37, Y + 56],
+ 				[X + 34, Y + 58],
+ 				[X + 32, Y + 58],
+ 				[X + 29, Y + 55],
+ 				[X + 29, Y + 40],
+ 				[X + 6, Y + 40],
+ 				[X + 4, Y + 3],
+ 				[X + 6, Y + 1]
+ 			]);
+ 		} else if (val == 5) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 10, Y + 1],
+ 				[X + 40, Y + 1],
+ 				[X + 43, Y + 3],
+ 				[X + 43, Y + 5],
+ 				[X + 39, Y + 8],
+ 				[X + 17, Y + 8],
+ 				[X + 17, Y + 26],
+ 				[X + 36, Y + 26],
+ 				[X + 43, Y + 31],
+ 				[X + 43, Y + 53],
+ 				[X + 37, Y + 58],
+ 				[X + 13, Y + 58],
+ 				[X + 1, Y + 53],
+ 				[X + 1, Y + 50],
+ 				[X + 5, Y + 48],
+ 				[X + 14, Y + 52],
+ 				[X + 35, Y + 52],
+ 				[X + 35, Y + 33],
+ 				[X + 10, Y + 33],
+ 				[X + 10, Y + 1]
+ 			]);
+ 		} else if (val == 6) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 4, Y + 1],
+ 				[X + 10, Y + 1],
+ 				[X + 13, Y + 3],
+ 				[X + 13, Y + 7],
+ 				[X + 9, Y + 7],
+ 				[X + 9, Y + 32],
+ 				[X + 39, Y + 32],
+ 				[X + 43, Y + 35],
+ 				[X + 43, Y + 56],
+ 				[X + 40, Y + 58],
+ 				[X + 4, Y + 58],
+ 				[X + 1, Y + 56],
+ 				[X + 1, Y + 3]
+ 			]);
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 9, Y + 39],
+ 				[X + 35, Y + 39],
+ 				[X + 35, Y + 51],
+ 				[X + 9, Y + 51],
+ 				[X + 9, Y + 39]
+ 			]);
+ 		} else if (val == 7) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 4, Y + 1],
+ 				[X + 43, Y + 1],
+ 				[X + 43, Y + 24],
+ 				[X + 26, Y + 37],
+ 				[X + 26, Y + 55],
+ 				[X + 23, Y + 58],
+ 				[X + 20, Y + 58],
+ 				[X + 18, Y + 56],
+ 				[X + 18, Y + 34],
+ 				[X + 35, Y + 21],
+ 				[X + 35, Y + 8],
+ 				[X + 8, Y + 8],
+ 				[X + 8, Y + 10],
+ 				[X + 6, Y + 11],
+ 				[X + 4, Y + 11],
+ 				[X + 1, Y + 9],
+ 				[X + 1, Y + 3],
+ 				[X + 4, Y + 1]
+ 			]);
+ 		} else if (val == 8) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 13, Y + 1],
+ 				[X + 31, Y + 1],
+ 				[X + 34, Y + 3],
+ 				[X + 34, Y + 26],
+ 				[X + 39, Y + 27],
+ 				[X + 43, Y + 32],
+ 				[X + 43, Y + 52],
+ 				[X + 39, Y + 57],
+ 				[X + 36, Y + 58],
+ 				[X + 8, Y + 58],
+ 				[X + 5, Y + 57],
+ 				[X + 1, Y + 53],
+ 				[X + 1, Y + 31],
+ 				[X + 5, Y + 27],
+ 				[X + 10, Y + 26],
+ 				[X + 10, Y + 3],
+ 				[X + 13, Y + 1]
+ 			]);
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 17, Y + 8],
+ 				[X + 27, Y + 8],
+ 				[X + 27, Y + 26],
+ 				[X + 17, Y + 26],
+ 				[X + 17, Y + 8]
+ 			]);
+ 			dc.fillPolygon([
+ 				[X + 9, Y + 33],
+ 				[X + 35, Y + 33],
+ 				[X + 35, Y + 51],
+ 				[X + 9, Y + 51],
+ 				[X + 9, Y + 33]
+ 			]);
+ 		} else if (val == 9) {
+ 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 4, Y + 1],
+ 				[X + 40, Y + 1],
+ 				[X + 43, Y + 3],
+ 				[X + 43, Y + 56],
+ 				[X + 40, Y + 58],
+ 				[X + 34, Y + 58],
+ 				[X + 31, Y + 56],
+ 				[X + 31, Y + 53],
+ 				[X + 32, Y + 52],
+ 				[X + 35, Y + 52],
+ 				[X + 35, Y + 26],
+ 				[X + 3, Y + 26],
+ 				[X + 1, Y + 24],
+ 				[X + 1, Y + 3],
+ 				[X + 4, Y + 1]
+ 			]);
+ 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+ 			dc.fillPolygon([
+ 				[X + 9, Y + 8],
+ 				[X + 35, Y + 8],
+ 				[X + 35, Y + 20],
+ 				[X + 9, Y + 20],
+ 				[X + 9, Y + 8]
+ 			]);
+ 		} else {
+ 		}
+ 	}
+
+ 	hidden function _drawMinute(dc, val, pos) {
+ 		var X = scale(pos[:x]);
+ 		var Y = scale(pos[:y]);
  	}
  }

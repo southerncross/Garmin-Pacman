@@ -15,30 +15,6 @@ class PacmanView extends Ui.WatchFace {
     function onLayout(dc) {
     	//Sys.println("onLayout");
         playground = new Playground();
-        playground.loadBm([
-        	Ui.loadResource(Rez.Drawables.hour_0),
-        	Ui.loadResource(Rez.Drawables.hour_1),
-        	Ui.loadResource(Rez.Drawables.hour_2),
-        	Ui.loadResource(Rez.Drawables.hour_3),
-        	Ui.loadResource(Rez.Drawables.hour_4),
-        	Ui.loadResource(Rez.Drawables.hour_5),
-        	Ui.loadResource(Rez.Drawables.hour_6),
-        	Ui.loadResource(Rez.Drawables.hour_7),
-        	Ui.loadResource(Rez.Drawables.hour_8),
-        	Ui.loadResource(Rez.Drawables.hour_9)
-        ],
-        [
-        	Ui.loadResource(Rez.Drawables.minute_0),
-        	Ui.loadResource(Rez.Drawables.minute_1),
-        	Ui.loadResource(Rez.Drawables.minute_2),
-        	Ui.loadResource(Rez.Drawables.minute_3),
-        	Ui.loadResource(Rez.Drawables.minute_4),
-        	Ui.loadResource(Rez.Drawables.minute_5),
-        	Ui.loadResource(Rez.Drawables.minute_6),
-        	Ui.loadResource(Rez.Drawables.minute_7),
-        	Ui.loadResource(Rez.Drawables.minute_8),
-        	Ui.loadResource(Rez.Drawables.minute_9)
-        ]);
 
         movables = new [5];
 
@@ -50,7 +26,6 @@ class PacmanView extends Ui.WatchFace {
     //! loading resources into memory.
     function onShow() {
     	//Sys.println("onShow");
-
     	playground.init();
 
         var pacman = new Pacman();
@@ -102,16 +77,18 @@ class PacmanView extends Ui.WatchFace {
 
     //! Update the view
     function onUpdate(dc) {
+    	//Sys.println("onUpdate");
     	if (prevState == :onHide) {
     		return;
     	}
 
-    	//Sys.println("onUpdate");
-
-        playground.update(dc);
-
-        for (var i = 0; i < 5; i++) {
-        	movables[i].moveToNextPos(dc);
+		if (prevState != :onUpdate) {
+			playground.update(dc, true);
+		} else {
+        	playground.update(dc, false);
+        	for (var i = 0; i < 5; i++) {
+        		movables[i].moveToNextPos(dc);
+        	}
         }
 
         prevState = :onUpdate;

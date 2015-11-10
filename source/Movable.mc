@@ -215,7 +215,7 @@ class Pacman extends Movable {
 			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 10, scale(pos[:x]) + 12, scale(pos[:y]) + 10);
 			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 11, scale(pos[:x]) + 12, scale(pos[:y]) + 11);
 			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 12, scale(pos[:x]) + 11, scale(pos[:y]) + 12);
-			dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 13, scale(pos[:x]) + 9, scale(pos[:y]) + 13); 
+			dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 13, scale(pos[:x]) + 9, scale(pos[:y]) + 13);
     	} else if (dir == :right) {
     		dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 1, scale(pos[:x]) + 10, scale(pos[:y]) + 1);
     		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 2, scale(pos[:x]) + 12, scale(pos[:y]) + 2);
@@ -229,7 +229,7 @@ class Pacman extends Movable {
 			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 10, scale(pos[:x]) + 13, scale(pos[:y]) + 10);
 			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 11, scale(pos[:x]) + 13, scale(pos[:y]) + 11);
 			dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 12, scale(pos[:x]) + 12, scale(pos[:y]) + 12);
-			dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 13, scale(pos[:x]) + 10, scale(pos[:y]) + 13); 
+			dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 13, scale(pos[:x]) + 10, scale(pos[:y]) + 13);
     	} else {
     	}
     }
