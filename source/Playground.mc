@@ -6,9 +6,17 @@ class Playground {
 	// Playground map, 2d array actually.
 	var plg;
 
+	// Bitmap resource of hour.
+	// TODO: Replace it with hardcoded drawing.
 	var hBm;
+	
+	// Bitmap resource of minute.
+	// TODO: Replace it with hardcoded drawing.
 	var mBm;
 
+	// Remember whether the background has been drew. Since the background
+	// (barrier) does not change and thus we do not need to redraw it every
+	// time.
 	var hasDrewPlg;
 
 	// Initialize function.
@@ -22,6 +30,11 @@ class Playground {
 		self.hBm = hBm;
 		self.mBm = mBm;
 
+		// Puzzle template. The definition is:
+		//   " " indicates empty unit.
+		//   "|", "-" or "+" indicates barrier.
+		//   "h" indicates hour.
+		//   "m" indicates minute.
 		var tpl = [
 			"| ++ || || ++ |",
 			"|    ++ ++    |",
@@ -40,6 +53,8 @@ class Playground {
 			"| ++ || || ++ |"
 		];
 
+		// Since MonkeyC does not allow access string at specified index.
+		// So we have to convert the template into 2d array.
 		plg = new [SCREEN_UNIT];
 		for (var i = 0; i < SCREEN_UNIT; i++) {
 			plg[i] = new [SCREEN_UNIT];
@@ -81,34 +96,51 @@ class Playground {
 			_drawPlg(dc);
 		}
 
+		// Update & draw time.
 		var clockTime = Sys.getClockTime();
-
         var hour = clockTime.hour;
         var minute = clockTime.min;
 
+		// TODO: Currently we use bitmap resource, though it is memory expensive.
+		// I will replae it with hardcode drawing in the future.
 		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-
+		// Draw hour, first number.
 		dc.fillRectangle(4 * UNIT_SIZE, 3 * UNIT_SIZE, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
 		dc.drawBitmap(4 * UNIT_SIZE, 3 * UNIT_SIZE, hBm[hour / 10]);
-
+		// Draw hour, second number.
 		dc.fillRectangle(8 * UNIT_SIZE, 3 * UNIT_SIZE, 3 * UNIT_SIZE, 4 * UNIT_SIZE);
 		dc.drawBitmap(8 * UNIT_SIZE, 3 * UNIT_SIZE, hBm[hour % 10]);
-
+		// Draw minute, first number.
 		dc.fillRectangle(6 * UNIT_SIZE, 8 * UNIT_SIZE, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
 		dc.drawBitmap(6 * UNIT_SIZE, 8 * UNIT_SIZE, mBm[minute / 10]);
-
+		// Draw minute, second number.
 		dc.fillRectangle(9 * UNIT_SIZE, 8 * UNIT_SIZE, 2 * UNIT_SIZE, 3 * UNIT_SIZE);
 		dc.drawBitmap(9 * UNIT_SIZE, 8 * UNIT_SIZE, mBm[minute % 10]);
  	}
 
+	// Return the symbol at specified position.
+	//
+	// @param pos[in] the position to look at.
+	// @return symbol.
  	function get(pos) {
  		return plg[pos[:x]][pos[:y]];
  	}
 
- 	function set(pos, ele) {
- 		plg[pos[:x]][pos[:y]] = ele;
+	// Set a position with specified symbol.
+	//
+	// @param pos[in] the position to be set
+	// @param symbol[in] the symbol to be set.
+	// @return
+ 	function set(pos, symbol) {
+ 		plg[pos[:x]][pos[:y]] = symbol;
  	}
 
+	// Draw the background of playground.
+	// Since background is stable, so we should not evoke this method
+	// every time.
+	//
+	// @param dc[in] the device context for drawing
+	// @return
  	hidden function _drawPlg(dc) {
  		dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
 
@@ -121,15 +153,26 @@ class Playground {
  		hasDrewPlg = true;
  	}
 
- 	hidden function _drawUnit(dc, x, y) {
- 		if (plg[x][y] == :barrier) {
- 			var X = x * UNIT_SIZE;
- 			var Y = y * UNIT_SIZE;
+	// Draw a unit of screen.
+	// Actually here we only draw barriers.
+	//
+	// @param dc[in] the device contex for drawing
+	// @param pos[in] position of the unit
+	// @return
+ 	hidden function _drawUnit(dc, pos) {
+ 		if (plg[pos[:x]][pos[:y]] == :barrier) {
+ 			var X = pos[:x] * UNIT_SIZE;
+ 			var Y = pos[:y] * UNIT_SIZE;
+ 			// Whether the top border of this unit should be drew
  			var top = (y == 0 || plg[x][y - 1] != :barrier);
+ 			// Whether the bottom border of this unit should be drew
  			var bottom = (y == SCREEN_UNIT - 1 || plg[x][y + 1] != :barrier);
+ 			// Whether the left border of this unit should be drew
  			var left = (x == 0 || plg[x - 1][y] != :barrier);
+ 			// Whether the right border of this unit should be drew
  			var right = (x == SCREEN_UNIT - 1 || plg[x + 1][y] != :barrier);
 
+			// No other choice, T-T
  			if (top) {
  				if (left) {
  					dc.drawLine(X + 5, Y + 2, X + 7, Y + 2);

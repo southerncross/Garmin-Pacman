@@ -42,6 +42,11 @@ function getDirection(pos, newPos) {
     return dir;
 }
 
+// Calculate the next position along specified direction.
+//
+// @param pos[in] current position
+// @param dir[in] direction for going
+// @return next position
 function getNextPosition(pos, dir) {
 	var nextPos = {};
 	if (dir == :up) {
@@ -64,6 +69,12 @@ function getNextPosition(pos, dir) {
 	return nextPos;
 }
 
+// Scale the coordination.
+// Since we divide the whole map into several units, so we have to scale the
+// coordination with the size of unit.
+//
+// @param c[in] coordination value
+// @return scaled screen coordination
 function scale(c) {
 	return c * UNIT_SIZE;
 }
@@ -123,7 +134,6 @@ class Pacman extends Movable {
     // @param plg[in] The playground object
     // @param pos[in] The initial position
     // @param dir[in] The initial direction
-    // @poram bm[in] The bitmap resources.
     // @return
     function init(plg, pos, dir) {
         Movable.init(plg, pos, dir);
@@ -161,14 +171,19 @@ class Pacman extends Movable {
     	dc.fillRectangle(pos[:x] * UNIT_SIZE, pos[:y] * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     }
 
-    // Draw images of current position.
+    // Draw pacman at current position.
     //
     // @pram dc[in] device context which is used for drawing
     // @return
     hidden function _draw(dc) {
+    	// Mark playground
     	plg.set(pos, :pacman);
 
+		// Garmin ConnectIQ does some differential caculation when displays
+		// bitmap, which will cause the color looks weird. As a completist,
+		// I have no choice but draw the image handfully ;)
     	dc.setColor(color, Gfx.COLOR_BLACK);
+    	// Every direction has its own picture.
     	if (dir == :up) {
     		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 4, scale(pos[:x]) + 1, scale(pos[:y]) + 9);
     		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 2, scale(pos[:x]) + 2, scale(pos[:y]) + 11);
@@ -233,11 +248,17 @@ class Pacman extends Movable {
     //
     // @return next position
     hidden function _findNextPos() {
-    	// Move along previous direction.
+    	// It is reasonable that pacman walks along his previous direction.
+		// So if possible, we just let him walk in that way.
 		if (_isDirectionValid(dir)) {
 			return getNextPosition(pos, dir);
 		}
 
+		// If previous direction is invalid, pacman will find and choose one
+		// other direction to move.
+		// TODO: Currently we just let pacman hang around, the only strategy
+		// of finding next position is do not hit the barrier. In the future,
+		// I will add more complex strategies for routing.
         var dirs = new [3];
         var cnt = 0;
 
@@ -259,13 +280,23 @@ class Pacman extends Movable {
         }
 
         if (cnt > 0) {
+        	// If more than one directions are valid, select any of them randomly.
         	return getNextPosition(pos, dirs[Math.rand() % cnt]); // TODO: srand
         } else {
+        	// Otherwise, just stands still.
         	return getNextPosition(pos, null);
         }
     }
 
+	// Decide whether the specified direction is valid for going.
+	// 
+	// @param dir[in] direction for going.
+	// @return true or false.
     hidden function _isDirectionValid(dir) {
+    	// TODO: Currently the only strategy of deciding the validation
+		// of a direction is to check whether the next position along that
+		// direction is empty. In the future, I will add some more complex
+		// strategy.
     	var nextPos = getNextPosition(pos, dir);
     	return plg.get(nextPos) == :nil;
     }
@@ -274,6 +305,7 @@ class Pacman extends Movable {
 
 // Ghost
 class Ghost extends Movable {
+	// The color of ghost.
 	var color;
 
     // Initialize function.
@@ -282,7 +314,7 @@ class Ghost extends Movable {
     // @param plg[in] The playground object
     // @param pos[in] The initial position
     // @param dir[in] The initial direction
-    // @poram bm[in] The bitmap resources.
+    // @poram color[in] The color of ghost.
     // @return
     function init(plg, pos, dir, color) {
         Movable.init(plg, pos, dir);
@@ -296,7 +328,6 @@ class Ghost extends Movable {
     //
     // @return
     function uninit() {
-        bm = null;
         Movable.uninit();
     }
 
@@ -327,9 +358,14 @@ class Ghost extends Movable {
     // @pram dc[in] device context which is used for drawing
     // @return
     hidden function _draw(dc) {
+    	// Mark playground
     	plg.set(pos, :ghost);
 
-    	// body
+		// Garmin ConnectIQ does some differential caculation when displays
+		// bitmap, which will cause the color looks weird. As a completist,
+		// I have no choice but draw the image handfully ;)
+    	dc.setColor(color, Gfx.COLOR_BLACK);
+    	// Draw body
     	dc.setColor(color, Gfx.COLOR_BLACK);
     	dc.drawLine(scale(pos[:x]), scale(pos[:y]) + 6, scale(pos[:x]), scale(pos[:y]) + 13);
     	dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 3, scale(pos[:x]) + 1, scale(pos[:y]) + 14);
@@ -346,7 +382,7 @@ class Ghost extends Movable {
     	dc.drawLine(scale(pos[:x]) + 12, scale(pos[:y]) + 3, scale(pos[:x]) + 12, scale(pos[:y]) + 14);
     	dc.drawLine(scale(pos[:x]) + 13, scale(pos[:y]) + 6, scale(pos[:x]) + 13, scale(pos[:y]) + 13);
 
-    	// eye
+    	// Draw eyes
     	if (dir == :up) {
     		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
     		dc.fillRectangle(scale(pos[:x]) + 2, scale(pos[:y]) + 4, 4, 3);
@@ -391,11 +427,17 @@ class Ghost extends Movable {
     //
     // @return next position
     hidden function _findNextPos() {
-        // Move along previous direction.
+        // It is reasonable that ghost walks along his previous direction.
+		// So if possible, we just let him walk in that way.
 		if (_isDirectionValid(dir)) {
 			return getNextPosition(pos, dir);
 		}
-
+		
+		// If previous direction is invalid, pacman will find and choose one
+		// other direction to move.
+		// TODO: Currently we just let pacman hang around, the only strategy
+		// of finding next position is do not hit the barrier. In the future,
+		// I will add more complex strategies for routing.
         var dirs = new [3];
         var cnt = 0;
 
@@ -417,13 +459,23 @@ class Ghost extends Movable {
         }
 
         if (cnt > 0) {
+        	// If more than one directions are valid, select any of them randomly.
         	return getNextPosition(pos, dirs[Math.rand() % cnt]); // TODO: srand
         } else {
+        	// Otherwise, just stands still.
         	return getNextPosition(pos, null);
         }
     }
 
+	// Decide whether the specified direction is valid for going.
+	// 
+	// @param dir[in] direction for going.
+	// @return true or false.
     hidden function _isDirectionValid() {
+    	// TODO: Currently the only strategy of deciding the validation
+		// of a direction is to check whether the next position along that
+		// direction is empty. In the future, I will add some more complex
+		// strategy.
     	var nextPos = getNextPosition(pos, dir);
     	return plg.get(nextPos) == :nil;
     }
