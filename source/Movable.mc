@@ -172,64 +172,50 @@ class Pacman extends Movable {
 		// Garmin ConnectIQ does some differential caculation when displays
 		// bitmap, which will cause the color looks weird. As a completist,
 		// I have no choice but draw the image handfully ;)
-    	dc.setColor(color, Gfx.COLOR_BLACK);
+		var X = scale(pos[:x]);
+		var Y = scale(pos[:y]);
+
     	// Every direction has its own picture.
     	if (dir == :up) {
-    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 4, scale(pos[:x]) + 1, scale(pos[:y]) + 9);
-    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 2, scale(pos[:x]) + 2, scale(pos[:y]) + 11);
-    		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 1, scale(pos[:x]) + 3, scale(pos[:y]) + 12);
-    		dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 1, scale(pos[:x]) + 4, scale(pos[:y]) + 12);
-    		dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 3, scale(pos[:x]) + 5, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]) + 6, scale(pos[:x]) + 6, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 7, scale(pos[:y]) + 8, scale(pos[:x]) + 7, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 8, scale(pos[:y]) + 6, scale(pos[:x]) + 8, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 9, scale(pos[:y]) + 3, scale(pos[:x]) + 9, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 10, scale(pos[:y]) + 1, scale(pos[:x]) + 10, scale(pos[:y]) + 12);
-    		dc.drawLine(scale(pos[:x]) + 11, scale(pos[:y]) + 1, scale(pos[:x]) + 11, scale(pos[:y]) + 12);
-    		dc.drawLine(scale(pos[:x]) + 12, scale(pos[:y]) + 2, scale(pos[:x]) + 12, scale(pos[:y]) + 11);
-    		dc.drawLine(scale(pos[:x]) + 13, scale(pos[:y]) + 4, scale(pos[:x]) + 13, scale(pos[:y]) + 9);
+    		dc.setColor(color, Gfx.COLOR_BLACK);
+    		dc.fillRoundedRectangle(X + 1, Y, 12, 13, 4);
+    		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    		dc.fillPolygon([
+    			[X + 4, Y],
+    			[X + 7, Y + 8],
+    			[X + 10, Y],
+    			[X + 4, Y]
+    		]);
     	} else if (dir == :down) {
-    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 5, scale(pos[:x]) + 1, scale(pos[:y]) + 10);
-    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 3, scale(pos[:x]) + 2, scale(pos[:y]) + 12);
-    		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 2, scale(pos[:x]) + 3, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 2, scale(pos[:x]) + 4, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 1, scale(pos[:x]) + 5, scale(pos[:y]) + 11);
-    		dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]) + 1, scale(pos[:x]) + 6, scale(pos[:y]) + 8);
-    		dc.drawLine(scale(pos[:x]) + 7, scale(pos[:y]) + 1, scale(pos[:x]) + 7, scale(pos[:y]) + 5);
-    		dc.drawLine(scale(pos[:x]) + 8, scale(pos[:y]) + 1, scale(pos[:x]) + 8, scale(pos[:y]) + 8);
-    		dc.drawLine(scale(pos[:x]) + 9, scale(pos[:y]) + 1, scale(pos[:x]) + 9, scale(pos[:y]) + 11);
-    		dc.drawLine(scale(pos[:x]) + 10, scale(pos[:y]) + 2, scale(pos[:x]) + 10, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 11, scale(pos[:y]) + 2, scale(pos[:x]) + 11, scale(pos[:y]) + 13);
-    		dc.drawLine(scale(pos[:x]) + 12, scale(pos[:y]) + 3, scale(pos[:x]) + 12, scale(pos[:y]) + 12);
-    		dc.drawLine(scale(pos[:x]) + 13, scale(pos[:y]) + 5, scale(pos[:x]) + 13, scale(pos[:y]) + 10);
+    		dc.setColor(color, Gfx.COLOR_BLACK);
+    		dc.fillRoundedRectangle(X + 1, Y + 1, 12, 13, 4);
+    		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    		dc.fillPolygon([
+    			[X + 4, Y + 14],
+    			[X + 7, Y + 6],
+    			[X + 10, Y + 14],
+    			[X + 4, Y + 14]
+    		]);
     	} else if (dir == :left) {
-    		dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 1, scale(pos[:x]) + 9, scale(pos[:y]) + 1);
-    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 2, scale(pos[:x]) + 11, scale(pos[:y]) + 2);
-    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 3, scale(pos[:x]) + 12, scale(pos[:y]) + 3);
-    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 4, scale(pos[:x]) + 12, scale(pos[:y]) + 4);
-    		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 5, scale(pos[:x]) + 13, scale(pos[:y]) + 5);
-    		dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]) + 6, scale(pos[:x]) + 13, scale(pos[:y]) + 6);
-    		dc.drawLine(scale(pos[:x]) + 9, scale(pos[:y]) + 7, scale(pos[:x]) + 13, scale(pos[:y]) + 7);
-			dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]) + 8, scale(pos[:x]) + 13, scale(pos[:y]) + 8);
-			dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 9, scale(pos[:x]) + 13, scale(pos[:y]) + 9);
-			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 10, scale(pos[:x]) + 12, scale(pos[:y]) + 10);
-			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 11, scale(pos[:x]) + 12, scale(pos[:y]) + 11);
-			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 12, scale(pos[:x]) + 11, scale(pos[:y]) + 12);
-			dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 13, scale(pos[:x]) + 9, scale(pos[:y]) + 13);
+    		dc.setColor(color, Gfx.COLOR_BLACK);
+    		dc.fillRoundedRectangle(X, Y + 1, 13, 12, 4);
+    		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    		dc.fillPolygon([
+    			[X, Y + 4],
+    			[X + 8, Y + 7],
+    			[X, Y + 10],
+    			[X, Y + 4]
+    		]);
     	} else if (dir == :right) {
-    		dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 1, scale(pos[:x]) + 10, scale(pos[:y]) + 1);
-    		dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 2, scale(pos[:x]) + 12, scale(pos[:y]) + 2);
-    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 3, scale(pos[:x]) + 13, scale(pos[:y]) + 3);
-    		dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 4, scale(pos[:x]) + 13, scale(pos[:y]) + 4);
-    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 5, scale(pos[:x]) + 11, scale(pos[:y]) + 5);
-    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 6, scale(pos[:x]) + 8, scale(pos[:y]) + 6);
-    		dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 7, scale(pos[:x]) + 5, scale(pos[:y]) + 7); //
-			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 8, scale(pos[:x]) + 8, scale(pos[:y]) + 8);
-			dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 9, scale(pos[:x]) + 11, scale(pos[:y]) + 9);
-			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 10, scale(pos[:x]) + 13, scale(pos[:y]) + 10);
-			dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 11, scale(pos[:x]) + 13, scale(pos[:y]) + 11);
-			dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 12, scale(pos[:x]) + 12, scale(pos[:y]) + 12);
-			dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]) + 13, scale(pos[:x]) + 10, scale(pos[:y]) + 13);
+    		dc.setColor(color, Gfx.COLOR_BLACK);
+    		dc.fillRoundedRectangle(X + 1, Y + 1, 13, 12, 4);
+    		dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+    		dc.fillPolygon([
+    			[X + 14, Y + 4],
+    			[X + 5, Y + 7],
+    			[X + 14, Y + 10],
+    			[X + 14, Y + 4]
+    		]);
     	} else {
     	}
     }
@@ -354,61 +340,64 @@ class Ghost extends Movable {
 		// Garmin ConnectIQ does some differential caculation when displays
 		// bitmap, which will cause the color looks weird. As a completist,
 		// I have no choice but draw the image handfully ;)
+		var X = scale(pos[:x]);
+		var Y = scale(pos[:y]);
+
     	dc.setColor(color, Gfx.COLOR_BLACK);
     	// Draw body
     	dc.setColor(color, Gfx.COLOR_BLACK);
-    	dc.drawLine(scale(pos[:x]), scale(pos[:y]) + 6, scale(pos[:x]), scale(pos[:y]) + 13);
-    	dc.drawLine(scale(pos[:x]) + 1, scale(pos[:y]) + 3, scale(pos[:x]) + 1, scale(pos[:y]) + 14);
-    	dc.drawLine(scale(pos[:x]) + 2, scale(pos[:y]) + 2, scale(pos[:x]) + 2, scale(pos[:y]) + 14);
-    	dc.drawLine(scale(pos[:x]) + 3, scale(pos[:y]) + 1, scale(pos[:x]) + 3, scale(pos[:y]) + 13);
-    	dc.drawLine(scale(pos[:x]) + 4, scale(pos[:y]) + 1, scale(pos[:x]) + 4, scale(pos[:y]) + 12);
-    	dc.drawLine(scale(pos[:x]) + 5, scale(pos[:y]), scale(pos[:x]) + 5, scale(pos[:y]) + 13);
-    	dc.drawLine(scale(pos[:x]) + 6, scale(pos[:y]), scale(pos[:x]) + 6, scale(pos[:y]) + 14);
-    	dc.drawLine(scale(pos[:x]) + 7, scale(pos[:y]), scale(pos[:x]) + 7, scale(pos[:y]) + 14);
-    	dc.drawLine(scale(pos[:x]) + 8, scale(pos[:y]), scale(pos[:x]) + 8, scale(pos[:y]) + 13);
-    	dc.drawLine(scale(pos[:x]) + 9, scale(pos[:y]) + 1, scale(pos[:x]) + 9, scale(pos[:y]) + 12);
-    	dc.drawLine(scale(pos[:x]) + 10, scale(pos[:y]) + 1, scale(pos[:x]) + 10, scale(pos[:y]) + 13);
-    	dc.drawLine(scale(pos[:x]) + 11, scale(pos[:y]) + 2, scale(pos[:x]) + 11, scale(pos[:y]) + 14);
-    	dc.drawLine(scale(pos[:x]) + 12, scale(pos[:y]) + 3, scale(pos[:x]) + 12, scale(pos[:y]) + 14);
-    	dc.drawLine(scale(pos[:x]) + 13, scale(pos[:y]) + 6, scale(pos[:x]) + 13, scale(pos[:y]) + 13);
+    	dc.drawLine(X, Y + 6, X, Y + 13);
+    	dc.drawLine(X + 1, Y + 3, X + 1, Y + 14);
+    	dc.drawLine(X + 2, Y + 2, X + 2, Y + 14);
+    	dc.drawLine(X + 3, Y + 1, X + 3, Y + 13);
+    	dc.drawLine(X + 4, Y + 1, X + 4, Y + 12);
+    	dc.drawLine(X + 5, Y, X + 5, Y + 13);
+    	dc.drawLine(X + 6, Y, X + 6, Y + 14);
+    	dc.drawLine(X + 7, Y, X + 7, Y + 14);
+    	dc.drawLine(X + 8, Y, X + 8, Y + 13);
+    	dc.drawLine(X + 9, Y + 1, X + 9, Y + 12);
+    	dc.drawLine(X + 10, Y + 1, X + 10, Y + 13);
+    	dc.drawLine(X + 11, Y + 2, X + 11, Y + 14);
+    	dc.drawLine(X + 12, Y + 3, X + 12, Y + 14);
+    	dc.drawLine(X + 13, Y + 6, X + 13, Y + 13);
 
     	// Draw eyes
     	if (dir == :up) {
     		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
-    		dc.fillRectangle(scale(pos[:x]) + 2, scale(pos[:y]) + 4, 4, 3);
-			dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 3, 2, 5);
-			dc.fillRectangle(scale(pos[:x]) + 8, scale(pos[:y]) + 4, 4, 3);
-			dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 3, 2, 5);
+    		dc.fillRectangle(X + 2, Y + 4, 4, 3);
+			dc.fillRectangle(X + 3, Y + 3, 2, 5);
+			dc.fillRectangle(X + 8, Y + 4, 4, 3);
+			dc.fillRectangle(X + 9, Y + 3, 2, 5);
 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-    		dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 3, 2, 2);
-    		dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 3, 2, 2);
+    		dc.fillRectangle(X + 3, Y + 3, 2, 2);
+    		dc.fillRectangle(X + 9, Y + 3, 2, 2);
     	} else if (dir == :down) {
     		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
-    	   	dc.fillRectangle(scale(pos[:x]) + 2, scale(pos[:y]) + 4, 4, 3);
-			dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 3, 2, 5);
-			dc.fillRectangle(scale(pos[:x]) + 8, scale(pos[:y]) + 4, 4, 3);
-			dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 3, 2, 5);
+    	   	dc.fillRectangle(X + 2, Y + 4, 4, 3);
+			dc.fillRectangle(X + 3, Y + 3, 2, 5);
+			dc.fillRectangle(X + 8, Y + 4, 4, 3);
+			dc.fillRectangle(X + 9, Y + 3, 2, 5);
 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-    		dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 6, 2, 2);
-    		dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 6, 2, 2);
+    		dc.fillRectangle(X + 3, Y + 6, 2, 2);
+    		dc.fillRectangle(X + 9, Y + 6, 2, 2);
     	} else if (dir == :left) {
     		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
-    		dc.fillRectangle(scale(pos[:x]) + 1, scale(pos[:y]) + 4, 4, 3);
-			dc.fillRectangle(scale(pos[:x]) + 2, scale(pos[:y]) + 3, 2, 5);
-			dc.fillRectangle(scale(pos[:x]) + 7, scale(pos[:y]) + 4, 4, 3);
-			dc.fillRectangle(scale(pos[:x]) + 8, scale(pos[:y]) + 3, 2, 5);
+    		dc.fillRectangle(X + 1, Y + 4, 4, 3);
+			dc.fillRectangle(X + 2, Y + 3, 2, 5);
+			dc.fillRectangle(X + 7, Y + 4, 4, 3);
+			dc.fillRectangle(X + 8, Y + 3, 2, 5);
 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-    		dc.fillRectangle(scale(pos[:x]) + 1, scale(pos[:y]) + 5, 2, 2);
-    		dc.fillRectangle(scale(pos[:x]) + 7, scale(pos[:y]) + 5, 2, 2);
+    		dc.fillRectangle(X + 1, Y + 5, 2, 2);
+    		dc.fillRectangle(X + 7, Y + 5, 2, 2);
     	} else if (dir == :right) {
     		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
-    		dc.fillRectangle(scale(pos[:x]) + 3, scale(pos[:y]) + 4, 4, 3);
-			dc.fillRectangle(scale(pos[:x]) + 4, scale(pos[:y]) + 3, 2, 5);
-			dc.fillRectangle(scale(pos[:x]) + 9, scale(pos[:y]) + 4, 4, 3);
-			dc.fillRectangle(scale(pos[:x]) + 10, scale(pos[:y]) + 3, 2, 5);
+    		dc.fillRectangle(X + 3, Y + 4, 4, 3);
+			dc.fillRectangle(X + 4, Y + 3, 2, 5);
+			dc.fillRectangle(X + 9, Y + 4, 4, 3);
+			dc.fillRectangle(X + 10, Y + 3, 2, 5);
 			dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
-    		dc.fillRectangle(scale(pos[:x]) + 5, scale(pos[:y]) + 5, 2, 2);
-    		dc.fillRectangle(scale(pos[:x]) + 11, scale(pos[:y]) + 5, 2, 2);
+    		dc.fillRectangle(X + 5, Y + 5, 2, 2);
+    		dc.fillRectangle(X + 11, Y + 5, 2, 2);
     	} else {
     	}
     }

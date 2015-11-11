@@ -533,10 +533,10 @@ class Playground {
 			dc.setColor(Gfx.COLOR_DK_BLUE, Gfx.COLOR_BLACK);
  			dc.fillPolygon([
  				[X + 4, Y + 1],
- 				[X + 25, Y + 1],
+ 				[X + 20, Y + 1],
  				[X + 23, Y + 4],
  				[X + 23, Y + 40],
- 				[X + 25, Y + 43],
+ 				[X + 20, Y + 43],
  				[X + 4, Y + 43],
  				[X + 1, Y + 40],
  				[X + 1, Y + 4],
