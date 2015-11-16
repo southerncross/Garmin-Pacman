@@ -1,6 +1,6 @@
 <resources>
     <string id="AppName">Pac-man</string>
 
-    <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
+    <bitmap id="LauncherIcon" filename="images/launcher_icon.jpg" />
     
 </resources>
