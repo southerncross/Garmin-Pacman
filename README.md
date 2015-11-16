@@ -22,10 +22,10 @@ That's it. :smile:
 ## Issues
 
 1. Most of the time, Pacman only update the screen one time every minute :joy:. This constrain comes from Garmin Connect IQ SDK and it is an important way of saving battery life.
-Every time when you raise your wrist, Garmin Fenix3 will wake up from sleep mode into active mode, in which the screen can be updated every seconds. The active mode only lasts about 5s, then it will enter sleep mode again.
+Every time when you raise your wrist, Garmin Fenix3 will wake up from sleep mode into active mode, in which the screen can be updated every second. The active mode only lasts about 5s, then it will enter sleep mode again.
 
-2. Currently Pacman will cause the watch becomes slower :fearful:. In other words, when you switch to other widgets or apps, it needs about 3s to finish switching. However, once you have switched to other app, it will behave normally.
-The reason of this problem is that Pacman costs about 40K memory, I guess. It is inevitable because most of the memory is consumed by the code of drawing pictures :()
+2. Currently Pacman will let the watch become slower :fearful:. In other words, when you switch to other widgets or apps, it needs about 3s to finish the switching. However, once you have switched to other app, it will behave normally.
+The reason of it, I guess, is because Pacman costs about 40K(64K in total) memory. It is inevitable because most of the memory is consumed by the code of drawing pictures :worried:
 
 
 ## LICENSE
