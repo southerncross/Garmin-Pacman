@@ -5,19 +5,24 @@ using Toybox.Lang as Lang;
 
 class PacmanView extends Ui.WatchFace {
 
+    // Movable objects, including a pacman and 4 ghosts.
 	var movables;
 
+    // Map of the playground.
 	var playground;
 
+    // Previous state record, which is used for determining whether we
+    // should update the screen.
 	var prevState;
+
+    // Indicate whether the game is over. If it is true, the screen
+    // will never be updated(except the time).
+	var gameover = false;
 
     //! Load your resources here
     function onLayout(dc) {
-    	//Sys.println("onLayout");
         playground = new Playground();
-
         movables = new [5];
-
         prevState = :onLayout;
     }
 
@@ -25,7 +30,6 @@ class PacmanView extends Ui.WatchFace {
     //! the state of this View and prepare it to be shown. This includes
     //! loading resources into memory.
     function onShow() {
-    	//Sys.println("onShow");
     	playground.init();
 
         var pacman = new Pacman();
@@ -77,7 +81,6 @@ class PacmanView extends Ui.WatchFace {
 
     //! Update the view
     function onUpdate(dc) {
-    	//Sys.println("onUpdate");
     	if (prevState == :onHide) {
     		return;
     	}
@@ -86,8 +89,11 @@ class PacmanView extends Ui.WatchFace {
 			playground.update(dc, true);
 		} else {
         	playground.update(dc, false);
-        	for (var i = 0; i < 5; i++) {
-        		movables[i].moveToNextPos(dc);
+        	for (var i = 0; i < 5 && !gameover; i++) {
+        		if (!movables[i].moveToNextPos(dc)) {
+        			// Game over!
+					gameover = true;
+        		}
         	}
         }
 
@@ -98,7 +104,6 @@ class PacmanView extends Ui.WatchFace {
     //! state of this View here. This includes freeing resources from
     //! memory.
     function onHide() {
-    	//Sys.println("onHide");
     	for (var i = 0; i < 5; i++) {
         	movables[i].uninit();
         	movables[i] = null;
@@ -108,13 +113,11 @@ class PacmanView extends Ui.WatchFace {
 
     //! The user has just looked at their watch. Timers and animations may be started here.
     function onExitSleep() {
-    	//Sys.println("onExitSleep");
     	prevState = :onExitSleep;
     }
 
     //! Terminate any active timers and prepare for slow updates.
     function onEnterSleep() {
-    	//Sys.println("onEnterSleep");
     	prevState = :onEnterSleep;
     }
 }
