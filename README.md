@@ -8,6 +8,12 @@ Garmin-Pacman
 Garmin-Pacman is a watch-face app of [Garmin Fenix3](fenix3.garmin.com) which displays a tiny Pac-man game on your watch :blush:
 
 
+## How to use it?
+1. First, you should have a Fenix3 :smile:
+2. Go to Garmin App store and download Pacman, it will be installed through ConnectIQ. (You can click [here](https://apps.garmin.com/en-US/apps/be58b7a5-5896-4f71-bd39-38a38baf3561))
+3. Connect your watch through ConnectIQ and download
+3. Set Pac-man as your watch-face.
+
 ## How to load it into develop environment?
 
 1. Download and deploy the Garmin develop environment along [Developer Guide].
